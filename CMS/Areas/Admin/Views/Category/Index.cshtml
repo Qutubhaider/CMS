@@ -1,13 +1,13 @@
-﻿@model  List<CMSBAL.Category.Models.CategoryListResult>
+﻿@model List<CMSBAL.Category.Models.CategoryListResult>
 @using CMSBAL.Category.Models
 @{
     Layout = "_LayoutAdmin";
     ViewBag.Title = "Manage Category";
     var loTableHeaders = new[]
                     {
-        new {Id="1", Visible=true, Title="Category Name",   Sort = true,   dbColName = "stCategoryName",   CssClass = "w150 sorting"},
-        new {Id="2", Visible=true, Title="Parent Category Name",   Sort = true,   dbColName = "stParenntCategoryName",   CssClass = "w150 sorting"},
-        new {Id="3", Visible=true, Title="Department",   Sort = true,   dbColName = "stDepartmentName",   CssClass = "w150 sorting"},
+        new {Id="3", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartmentName",   CssClass = "w150 sorting"},
+        new {Id="1", Visible=true, Title="Category Name",   Sort = false,   dbColName = "stCategoryName",   CssClass = "w150 sorting"},
+        new {Id="2", Visible=true, Title="Parent Category Name",   Sort = false,   dbColName = "stParenntCategoryName",   CssClass = "w150 sorting"},
         new {Id="",  Visible=true, Title="Action",       Sort = false,  dbColName = "",                   CssClass = "w40 text-center"}
     };
 }
@@ -16,11 +16,11 @@
     <div class="row">
         <div class="col-8">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Manage Department</h4>
+                <h4 class="mb-sm-0">Manage Category</h4>
             </div>
         </div>
         <div class="col-4" style="float:right;">
-            <a class="btn btn-info" style="float: right;"asp-area="Admin" asp-controller="Category" asp-action="Detail">Add New Category</a>
+            <a class="btn btn-info" style="float: right;" asp-area="Admin" asp-controller="Category" asp-action="Detail">Add New Category</a>
         </div>
     </div>
     <div class="row">
@@ -52,22 +52,21 @@
                                                         else
                                                             @loHeader.Title
 
-                                                        </th>
+                                                    </th>
                                                 }
                                             }
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     @foreach(CategoryListResult category in Model)
- {
-     <tr>
-            
-            <td>@category.stCategoryName</td>
-            <td>@(category.stParentCategoryName==null?"Self":category.stParentCategoryName)</td>
-            <td>@category.stDepartmentName</td>
-            <td class="text-center"><a asp-area="Admin" asp-controller="Category" asp-action="Detail" asp-route-id="@category.unCategoryId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
-        </tr>
- }
+                                        @foreach (CategoryListResult category in Model)
+                                        {
+                                        <tr>
+                                            <td>@category.stDepartmentName</td>
+                                            <td>@category.stCategoryName</td>
+                                            <td>@(category.stParentCategoryName==null?"Self":category.stParentCategoryName)</td>
+                                            <td class="text-center"><a asp-area="Admin" asp-controller="Category" asp-action="Detail" asp-route-id="@category.unCategoryId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -89,8 +88,8 @@
 
 <input id="hdnPageNoListPanel" type="hidden" value="1" />
 @section Scripts {
-<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
-} 
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+}
 
 
 
