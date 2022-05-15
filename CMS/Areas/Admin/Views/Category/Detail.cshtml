@@ -1,0 +1,71 @@
+﻿@model CMSBAL.Category.Models.Category
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Add Department";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Category Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="Category" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveCategory" asp-controller="Category" asp-area="Admin" class="custom-validation" novalidate="">
+                         <div class="mb-3">
+                            <label class="form-label">Departments</label>
+                           <select id="ddDepartment" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Department" asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department</option>
+                            </select>
+                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category Name</label>
+                            <input type="text" asp-for= "stCategoryName" class="form-control" placeholder="Category Name">
+                             <span asp-validation-for="stCategoryName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Select Parent Category</label>
+                         <select id="ddParentCategory" asp-for="inParentCategoryId" class="select2 form-control select2-multiple" data-placeholder="Self"asp-items="@(new SelectList(Model.CategoryList,"id","value"))">
+                                <option value="0">Self</option>
+                            </select>
+                             <span asp-validation-for="inParentCategoryId" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                            <label class="form-label">Status</label>
+                         <select id="ddStatus" asp-for="inStatus" class="select2 form-control select2-multiple" data-placeholder="Select Status">
+                                <option value="0">InActive</option>
+                                <option value="1">Active</option>
+                            </select>
+                             <span asp-validation-for="inParentCategoryId" class="text-danger"></span>
+                            </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Admin" asp-controller="Department" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                     <input type="hidden" asp-for=inCategoryId/>
+                     <input type="hidden" asp-for=unCategoryId/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

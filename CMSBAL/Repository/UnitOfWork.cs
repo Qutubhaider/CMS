@@ -28,6 +28,7 @@ namespace CMSBAL.Repository
             IssueFileHistoryRepository = new IssueFileHistoreyRepository(moDatabaseContext);
             CaseRepository = new CaseRepository(moDatabaseContext);
             DashboardRepository = new DashboardRepository(moDatabaseContext);
+            CategoryRepository = new CategoryRepository(moDatabaseContext);
         }
 
         public IDivisionRepository DivisionRepository {get;private set;}
@@ -44,6 +45,7 @@ namespace CMSBAL.Repository
         public IIssueFileHistoryRepository IssueFileHistoryRepository{get;private set;}
         public ICaseRepository CaseRepository {get;private set;}
         public IDashboardRepository DashboardRepository { get;private set;}
+        public ICategoryRepository CategoryRepository { get; private set; }
 
         public void Dispose()
         {
