@@ -12,7 +12,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title | Store - File System</title>
+    <title>@ViewBag.Title | Receptionist </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="">
@@ -75,7 +75,7 @@
                     <!-- LOGO -->
                     <div class="navbar-brand-box text-center">
                         <h2 style="color: white; margin: 14px;">
-                            Store Panel
+                            Receptionist 
                         </h2>
                     </div>
 
@@ -141,7 +141,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        @*<li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="ri-map-pin-line"></i>
                                 <span>File Allocation</span>
@@ -152,16 +152,16 @@
                                 <li><a asp-area="Stores" asp-controller="Shelves" asp-action="Index">Shelves</a></li>
                                 <li><a asp-area="Stores" asp-controller="File" asp-action="Index">Store File</a></li>
                             </ul>
-                        </li>
+                        </li>*@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="ri-map-pin-line"></i>
-                                <span>File</span>
+                                <span>Complains</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Issue File</a></li>
-                                <li><a asp-area="Stores" asp-controller="TraceFile" asp-action="Index">Trace File</a></li>
-                                <li><a asp-area="Stores" asp-controller="WithdrawFile" asp-action="Index">Withdraw File</a></li>
+                                <li><a asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Complain History</a></li>
+                                <li><a asp-area="Stores" asp-controller="TraceFile" asp-action="Index">Trace Complain</a></li>
+                                <li><a asp-area="Stores" asp-controller="WithdrawFile" asp-action="Index">Withdraw Complain</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -187,7 +187,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © File System.
+                            <script>document.write(new Date().getFullYear())</script> © Complain Management System.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">

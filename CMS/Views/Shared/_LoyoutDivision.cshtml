@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title | Division - File System</title>
+    <title>@ViewBag.Title | Division - Complain Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="shortcut icon" href="">
@@ -118,7 +118,7 @@
                             </a>
                         </li>
 
-                        <li>
+                        @*<li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="ri-map-pin-line"></i>
                                 <span>Desk Allocation</span>
@@ -128,20 +128,20 @@
                                 <li><a asp-area="Divisions" asp-controller="Designation" asp-action="Index">Designation</a></li>
                                 <li><a asp-area="Divisions" asp-controller="Desk" asp-action="Index">Desk</a></li>
                             </ul>
-                        </li>
+                        </li>*@
 
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="ri-map-pin-line"></i>
-                                <span>File Allocation</span>
+                                <span>Complain</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a asp-area="Divisions" asp-controller="Store" asp-action="Index">Store</a></li>
+                                @*<li><a asp-area="Divisions" asp-controller="Store" asp-action="Index">Store</a></li>
                                 <li><a asp-area="Divisions" asp-controller="Room" asp-action="Index">Room</a></li>
                                 <li><a asp-area="Divisions" asp-controller="Almirah" asp-action="Index">Almirah</a></li>
                                 <li><a asp-area="Divisions" asp-controller="Shelves" asp-action="Index">Shelves</a></li>
-                                <li><a asp-area="Divisions" asp-controller="File" asp-action="Index">Store File</a></li>
-                                <li><a asp-area="Divisions" asp-controller="IssueFile" asp-action="Index">Issue File History</a></li>
+                                <li><a asp-area="Divisions" asp-controller="File" asp-action="Index">Store File</a></li>*@
+                                <li><a asp-area="Divisions" asp-controller="IssueFile" asp-action="Index">Complain History</a></li>
                             </ul>
                         </li>
                         <li>
