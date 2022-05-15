@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "_LayoutDeskAdmin";
+    ViewBag.Title = "Manage Users";
+    var loTableHeaders = new[]
+                     {
+         new {Id="1", Visible=false, Title="Zone Name",      Sort = true,   dbColName = "stZoneName",      CssClass = ""},
+        new {Id="2", Visible=false, Title="Division Name",  Sort = true,   dbColName = "stDivisionName",  CssClass = ""},
+        new {Id="3", Visible=true, Title="Department Name",  Sort = true,   dbColName = "stDepartmentName",  CssClass = ""},
+        new {Id="4", Visible=true, Title="Designation Name",  Sort = true,   dbColName = "stDesignationName",  CssClass = ""},
+        new {Id="5", Visible=true, Title="Desk Name",      Sort = true,   dbColName = "stDeskName",      CssClass = ""},
+        new {Id="6", Visible=true, Title="User Name",  Sort = true,   dbColName = "stUserName",  CssClass = ""},
+        new {Id="7", Visible=true, Title="Status",  Sort = true,   dbColName = "inStatus",  CssClass = ""},
+        new {Id="8", Visible=true, Title="",               Sort = false,  dbColName = "",                CssClass = ""}
+    };
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Manage User</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-info" style="float: right;" asp-area="DeskAdmin" asp-controller="User" asp-action="Detail">Add User</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="datatable_length">
+                                    <label>
+                                        Show
+                                        <select style="display:none; width: 67px;" id="ddPageSize" onchange="getUserData();" name="size" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm">
+                                            <option>10</option>
+                                            <option>20</option>
+                                            <option>30</option>
+                                            <option>40</option>
+                                            <option>50</option>
+                                        </select>
+                                        <span id="spnNoOfRecordsMessage"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div id="datatable_filter" class="dataTables_filter">
+                                    <label>Search:<input type="search" id="txtUserName" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                                    &nbsp;
+                                    <button onclick="getUserData();" class="btn btn-info">Search</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12" id="UserList">
+
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
+                                <thead>
+                                    <tr role="row">
+                                        @{
+                                            int lsSortIndex = 0;
+                                            string lsSortOrder = "";
+                                            @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
+                                            {
+                                                <th class="@loHeader.CssClass" id="@loHeader.Id">
+                                                    @if (loHeader.Sort)
+                                                    {
+                                                        string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
+                                                        string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
+                                                        <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
+                                                    }
+                                                    else
+                                                        @loHeader.Title
+
+
+                                                </th>
+                                            }
+                                        }
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mx-0 pagination_wrap">
+                        <div class="dataTables_paginate paging_full_numbers clearfix text-center">
+                            <div class="pagination" id="paginationList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> <!-- end col -->
+<input id="hdnPageNoListPanel" type="hidden" value="1" />
+@section Scripts {
+
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        var msGetUserDataList = '@Url.Action("GetUserList")';
+            $(document).ready(function () {
+                getUserData();
+
+             });
+    </script>
+    <script src="~/Scripts/User/UserList.js" asp-append-version="true"></script>
+}

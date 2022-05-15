@@ -1,0 +1,42 @@
+﻿@model CMSBAL.User.Models.LoginVM
+@{
+    Layout = "_LayoutLogin";
+}
+<h4 class="font-size-18 text-muted mt-2 text-center">File System !</h4>
+<p class="mb-5 text-center">Sign in to continue to File System.</p>
+<form class="form-horizontal" asp-area="" asp-controller="Home" asp-action="AuthenticateUser">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mb-4">
+                <label class="form-label" for="username">Username</label>
+                <input type="text" asp-for="stEmail" class="form-control" id="username" placeholder="Enter username">
+                <span asp-validation-for="stEmail" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="userpassword">Password</label>
+                <input asp-for="stPassword" type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                <span asp-validation-for="stPassword" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <a asp-area="" asp-controller="Home" asp-action="SignUp" class="text-muted"><i class="fa fa-sign"></i> SignUp </a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="text-md-end mt-3 mt-md-0">
+                        <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid mt-4">
+                <button class="btn btn-primary waves-effect waves-light" type="submit">Log In</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

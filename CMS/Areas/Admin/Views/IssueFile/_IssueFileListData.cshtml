@@ -1,0 +1,40 @@
+﻿@model dynamic
+@using CMSBAL.IssueFIleHistory.Models
+@using CMSUtility.Utilities
+@using CMSUtility.Models
+
+
+
+@if (Model.GetIssueFileList != null && Model.GetIssueFileList.Count > 0)
+{
+    foreach (IssueFileListResult loIssueFileList in Model.GetIssueFileList)
+    {
+        <tr>
+            <td>@loIssueFileList.stFirstNameAssignedBy</td>
+            <td>@loIssueFileList.stDepartmentAssignedBy</td>
+            <td>@loIssueFileList.stFileName</td>
+            @{
+                DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
+            }
+            <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
+            <td class="text-center"><a asp-area="Admin" asp-controller="IssueFile" asp-action="Detail" asp-route-id="@loIssueFileList.unlssueFileId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
+@{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
+}
+

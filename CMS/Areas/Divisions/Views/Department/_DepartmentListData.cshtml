@@ -1,0 +1,34 @@
+﻿@using CMSBAL.Department.Models;
+@using CMSUtility.Utilities;
+@using CMSUtility.Models;
+
+@if (Model.GetDepartmentList != null && Model.GetDepartmentList.Count > 0)
+{
+    foreach (DepartmentListResult loDepartmentListResults in Model.GetDepartmentList)
+    {
+        <tr>
+            
+            <td>@loDepartmentListResults.stDepartmentName</td>
+            <td class="text-center"><a asp-area="Divisions" asp-controller="Department" asp-action="Detail" asp-route-id="@loDepartmentListResults.unDepartmentId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
+@{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
+}
+
+
+

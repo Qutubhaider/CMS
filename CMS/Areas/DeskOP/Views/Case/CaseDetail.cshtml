@@ -1,0 +1,246 @@
+﻿@model CMSBAL.Case.Models.CaseDetailResult
+@using CMSBAL.IssueFIleHistory.Models
+@using CMSUtility.Utilities
+@{
+    Layout = "_LayoutDeskOP";
+    ViewBag.Title = "Case Detail";
+
+    var loTableHeaders = new[]
+  {
+        new { Id = "0", Visible = true, Title = "SRID",  Sort = true,   dbColName = "inSRID",  CssClass = ""},
+        new {Id="1", Visible=true, Title="Assigned By",   Sort = true,   dbColName = "stFirstNameAssignedBy",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department", Sort = true,   dbColName = "stDepartmentAssignedBy", CssClass = ""},
+        new {Id="1", Visible=true, Title="Assigned To",   Sort = true,   dbColName = "stFirstNameAssignTo",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department", Sort = true,   dbColName = "stDepartmentAssignedTo", CssClass = ""},
+        new {Id="3", Visible=true, Title="File Detail : Emp Name | Emp No | PPO No | PF No",  Sort = true,   dbColName = "stFileName",   CssClass = ""},
+        new {Id="33", Visible=true, Title="Comment",  Sort = true,   dbColName = "stComment",   CssClass = ""},
+        new {Id="4", Visible=true, Title="Status",  Sort = true,   dbColName = "inStatus",   CssClass = ""},
+        new {Id="5", Visible=true, Title="Issue Date", Sort = true,   dbColName = "dtIssueDate",  CssClass = ""}
+    };
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Case Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="DeskOP" asp-controller="Case" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" novalidate="" asp-action="ForwardFile" asp-area="DeskOP" asp-controller="Case" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Employee Name</label>
+                            <input asp-for="stEmployeeName" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stEmployeeName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Number</label>
+                            <input asp-for="stEmployeeNumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stEmployeeNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PF Number</label>
+                            <input asp-for="stPFNumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stPFNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PPO Number</label>
+                            <input asp-for="stPPONumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stPPONumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input asp-for="stMobile" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stMobile" class="text-danger"></span>
+                        </div>
+                        @if (Model.inStatus == (int)CommonFunctions.CaseStatus.Open)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Department</label>
+                                <select id="ddDepartmentId" asp-for="inDepartmentId" onchange="getUserList($('#ddDepartmentId').val());" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                    <option value="">Select Department</option>
+                                </select>
+                                <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Assign To</label>
+                                <select id="assignedTo" asp-for="assignedTo" onchange="GetUserDetail($('#assignedTo').val());" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                    <option value="">Select User</option>
+                                </select>
+                                <span asp-validation-for="stMobile" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Comment</label>
+                                <textarea asp-for="stComment" class="form-control" placeholder="Comment.."></textarea>
+                                <span asp-validation-for="stPPONumber" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Attehment</label>
+                                <input type="file" class="filestyle" asp-for="File" data-buttonname="btn-secondary" />
+                            </div>
+
+                            <div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                        Forward
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                        <input type=hidden asp-for=inStoreFileDetailId />
+                        <input type="hidden" asp-for="inCaseId" />
+                        <input type="hidden" asp-for="inSRId" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        @if (Model.inStatus == (int)CommonFunctions.CaseStatus.Open)
+        {
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Assigned To</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input id="txtFirstName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <input id="txtLastName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input id="txtEmail" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input id="txtMobile" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <input id="txtUserType" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>File History</h4>
+                    </div>
+                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+
+                        <div class="col-sm-12" id="IssueFileList">
+
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
+                                <thead>
+                                    <tr role="row">
+                                        @{
+                                            int lsSortIndex = 0;
+                                            string lsSortOrder = "";
+                                            @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
+                                            {
+                                                <th class="@loHeader.CssClass" id="@loHeader.Id">
+                                                    @if (loHeader.Sort)
+                                                    {
+                                                        string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
+                                                        string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
+                                                        <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
+                                                    }
+                                                    else
+                                                        @loHeader.Title
+                                                </th>
+                                            }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model.IssueFileListResult != null && Model.IssueFileListResult.Count > 0)
+                                    {
+                                        foreach (IssueFileListResult loIssueFileList in Model.IssueFileListResult)
+                                        {
+                                    <tr>
+                                        <td>@loIssueFileList.inSRId</td>
+                                        <td>@loIssueFileList.stFirstNameAssignedBy</td>
+                                        <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                                        <td>@loIssueFileList.stFirstNameAssignTo</td>
+                                        <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                                        <td>@loIssueFileList.stFileName</td>
+                                        <td>@loIssueFileList.stComment</td>
+                                        <td>@Enum.GetName(typeof(CommonFunctions.FileStatus), loIssueFileList.inStatus)</td>
+                                        @{
+                                            DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
+                                        }
+                                        <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
+                                    </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="8" class="text-center py-5">No records found.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+    </div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script src="~/Scripts/File/FileDetail.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
+        var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+        var msUserList = '@Url.Action("GetUserDropdown")';
+
+         $(document).ready(function () {
+            getUserList($('#ddDepartmentId').val());
+            console.log($('#ddDepartmentId').val());
+         });
+
+        function getUserList(id) {
+            console.log(id);
+            var loData = new Object();
+            loData.DepartmentId = id;
+            if ($("#assignedTo").length > 0) {
+                $("#assignedTo").empty();
+                $("#assignedTo").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+            }
+            loadMyRequest(msUserList, "GET", loData, function (response) {
+                $("#assignedTo").empty();
+                $("#assignedTo").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+                response.data.forEach(d => $("#assignedTo").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+
+            }, function () { });
+        }
+
+    </script>
+}

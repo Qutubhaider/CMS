@@ -1,0 +1,96 @@
+﻿@model CMSBAL.Desk.Models.Desk;
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Desk Detail";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Desk Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="Desk" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" asp-action="saveDesk" asp-controller="Desk" asp-area="Admin">
+                        <div class="mb-3">
+                            <label class="form-label">Zone Name</label>
+                            <select id="ddZone" asp-for="inZoneId" onchange="OnZoneChange();" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.ZoneList,"id","value"))">
+                                <option value="">Select Zone Name</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Division Name</label>
+                            <select id="ddDivision" asp-for="inDivisionId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select Division Name</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department Name</label>
+                            <select id="ddDepartment" asp-for="inDepartmentId" onchange="OnDepartmentChange();" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department Name</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Designation Name</label>
+                            <select id="ddDesignation" asp-for="inDesignationId" class="select2 form-control select2-multiple" data-placeholder="Choose ..." >
+                                <option value="">Select Designation Name</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Desk Name</label>
+                            <input asp-for="stDeskName" type="text" class="form-control" placeholder="Desk Name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select id="ddStatus" asp-for="inStatus" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select Statud</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inDepartmentId" />
+                        <input type="hidden" asp-for="inDesignationId" />
+                        <input type="hidden" asp-for="inDeskId" />
+                        <input type="hidden" asp-for="inDivisionId" />
+                        <input type="hidden" asp-for="inStatus" />
+                        <input type="hidden" asp-for="inZoneId" />
+                        <input type="hidden" asp-for="unDeskId" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        var msGetDivisionDropDown = '@Url.Action("GetDivisionDropdown")';
+        var msGetDesignationDropDown = '@Url.Action("GetDesignationDropDown")';
+            $(document).ready(function () {
+                OnZoneChange(true);
+                OnDepartmentChange(true);
+        });
+    </script>
+    <script src="~/Scripts/Common//Dropdown.js" asp-append-version="true"></script>
+}

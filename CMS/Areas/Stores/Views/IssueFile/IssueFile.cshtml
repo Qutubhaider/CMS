@@ -1,0 +1,184 @@
+﻿@model CMSBAL.IssueFIleHistory.Models.IssueFile
+@{
+    Layout = "_LayoutStores";
+    ViewBag.Title = "Issue File";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Issue File</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Stores" class="custom-validation" novalidate="">
+
+                        <div class="mb-3">
+                            <label class="form-label">Employee Name || Employee No || PPO No || PF No</label>
+                            <select onchange="GetFileDetail($('#inStoreFileDetailsId').val());" asp-for="inStoreFileDetailsId" id="ddFileName" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.FileList,"id","value"))">
+                                <option value="">Select File Name</option>
+                            </select>
+                        </div>
+                        <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
+
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select id="ddDepartmentId" asp-for="inDepartmentId" onchange="getUserList($('#ddDepartmentId').val());" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department</option>
+                            </select>
+                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assign to User</label>
+                            <select onchange="GetUserDetail($('#inAssignUserId').val());" asp-for="inAssignUserId" id="ddUser" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select User</option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inlssueFileId">
+                        <input type="hidden" asp-for="inDepartmentId">
+                        <input type="hidden" asp-for="inDivisionId">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>Assigned To</h4>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input id="txtFirstName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input id="txtLastName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input id="txtEmail" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile</label>
+                        <input id="txtMobile" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">User Type</label>
+                        <input id="txtUserType" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>File Detail</h4>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Store Name</label>
+                        <input id="txtStoreName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Room Number</label>
+                        <input id="txtRoomNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Almirah Number</label>
+                        <input id="txtAlmirahNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Shelve Number</label>
+                        <input id="txtShelveNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Name</label>
+                        <input id="txtFileName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Employee Name</label>
+                        <input id="txtEmpoloyeeName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Employee Number</label>
+                        <input id="txtEmployeeNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">PF Number</label>
+                        <input id="txtPFNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile</label>
+                        <input id="txtMobile" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">PPO Number</label>
+                        <textarea id="txtPPONumber" class="form-control" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script type="text/javascript">
+    var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
+        var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+        var msUserList = '@Url.Action("GetUserDropdown")';
+
+        
+         $(document).ready(function () {
+            getUserList($('#ddDepartmentId').val());
+            console.log($('#ddDepartmentId').val());
+         });
+
+        function getUserList(id) {
+            console.log(id);
+            var loData = new Object();
+            loData.DepartmentId = id;
+            if ($("#ddUser").length > 0) {
+                $("#ddUser").empty();
+                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+            }
+            loadMyRequest(msUserList, "GET", loData, function (response) {
+                $("#ddUser").empty();
+                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+                response.data.forEach(d => $("#ddUser").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+
+            }, function () { });
+        }
+    </script>
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script src="~/Scripts/IssueFile/FileDetail.js" asp-append-version="true"></script>
+
+
+
+}

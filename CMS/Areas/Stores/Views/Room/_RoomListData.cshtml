@@ -1,0 +1,35 @@
+﻿@model dynamic
+@using CMSBAL.Room.Models
+@using CMSUtility.Utilities
+@using CMSUtility.Models
+
+@if (Model.GetRoomList != null && Model.GetRoomList.Count > 0)
+{
+    foreach (RoomListResult loRoomList in Model.GetRoomList)
+    {
+        <tr>
+       @*     <td>@loRoomList.stZoneName</td>
+            <td>@loRoomList.stDivisionName</td>
+            <td>@loRoomList.stDepartmentName</td>*@
+            <td>@loRoomList.stStoreName</td>
+            <td>@loRoomList.stRoomNumber</td>
+            <td class="text-center"><a asp-area="Stores" asp-controller="Room" asp-action="Detail" asp-route-id="@loRoomList.unRoomId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
+@{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
+}

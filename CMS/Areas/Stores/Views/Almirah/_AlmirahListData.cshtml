@@ -1,0 +1,38 @@
+﻿@model dynamic
+@using CMSBAL.Almirah.Models
+@using CMSUtility.Utilities
+@using CMSUtility.Models
+
+
+
+@if (Model.GetAlmirahList != null && Model.GetAlmirahList.Count > 0)
+{
+    foreach (AlmirahListResult loAlmirahList in Model.GetAlmirahList)
+    {
+        <tr>           
+          @*  <td>@loAlmirahList.stZoneName</td>
+            <td>@loAlmirahList.stDivisionName</td>
+            <td>@loAlmirahList.stDepartmentName</td>
+            <td>@loAlmirahList.stStoreName</td>*@
+            <td>@loAlmirahList.stRoomNumber</td>
+            <td>@loAlmirahList.stAlmirahNumber</td>
+            <td class="text-center"><a asp-area="Stores" asp-controller="Almirah" asp-action="Detail" asp-route-id="@loAlmirahList.unAlmirahId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
+@{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
+}

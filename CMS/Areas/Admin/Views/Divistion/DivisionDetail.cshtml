@@ -1,0 +1,58 @@
+﻿@model CMSBAL.Division.Models.Division;
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Division Detail";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Division Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="Division" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" asp-action="saveDivision" asp-controller="Division" asp-area="Admin" novalidate="">
+                        <div class="mb-3">
+                            <label class="form-label">State Name</label>
+                            <select asp-for="inZoneId" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.ZoneList,"id","value"))">
+                                <option value="">Select State Name</option>
+                            </select>
+                            <span asp-validation-for="inZoneId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Division Name</label>
+                            <input asp-for="stDivisionName" type="text" class="form-control" placeholder="Division Name">
+                            <span asp-validation-for="stDivisionName" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for=inDivisionId />
+                        <input type="hidden" asp-for=unDivisionId />
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

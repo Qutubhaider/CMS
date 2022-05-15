@@ -1,0 +1,50 @@
+﻿@model CMSBAL.Zone.Models.Zone
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Add Zone";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Add Zone</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="Zone" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveZone" asp-controller="Zone" asp-area="Admin" class="custom-validation" novalidate="">
+                        <div class="mb-3">
+
+                            <label class="form-label">Zone Name</label>
+                            <input type="text" asp-for="stZoneName" class="form-control" placeholder="Zone Name">
+                            <span asp-validation-for="stZoneName" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Admin" asp-controller="Zone" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for=inZoneId />
+                        <input type="hidden" asp-for="unZoneId" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -1,6 +1,6 @@
 using System;
 
-namespace CMS.Models
+namespace FileSystemWeb.Models
 {
     public class ErrorViewModel
     {

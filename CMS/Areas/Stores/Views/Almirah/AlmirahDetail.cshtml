@@ -1,0 +1,73 @@
+﻿@model CMSBAL.Almirah.Models.Almirah;
+@{
+    Layout = "_LayoutStores";
+    ViewBag.Title = "Almirah Detail";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Almirah Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="Almirah" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" asp-action="saveAlmirah" asp-controller="Almirah" asp-area="Stores" novalidate="">                       
+                        <div class="mb-3">
+                            <label class="form-label">Room Number</label>
+                            <select id="ddRoom" asp-for="inRoomId"  class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.RoomList,"id","value"))">
+                                <option value="">Select Room Name</option>
+
+                            </select>
+                            <span asp-validation-for="inRoomId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Almirah Number</label>
+                            <input asp-for="stAlmirahNumber" type="text" class="form-control" placeholder="Almirah Number">
+                            <span asp-validation-for="stAlmirahNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 d-none">
+                            <label class="form-label">Status</label>
+                            <select class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select Statud</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <input type="hidden" asp-for="inAlmirahId" />
+                        <input type="hidden" asp-for="unAlmirahId" />
+                        <input type="hidden" asp-for="inZoneId" />
+                        <input type="hidden" asp-for="inDepartmentId" />
+                        <input type="hidden" asp-for="inDivisionId" />
+                        <input type="hidden" asp-for="inStoreId" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+  
+}

@@ -1,0 +1,76 @@
+﻿@model CMSBAL.IssueFIleHistory.Models.IssueFile
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Issue File";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Add Designation</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="IssueFile" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Admin" class="custom-validation" novalidate="">
+                        <div class="mb-3">
+                            <label class="form-label">Division</label>
+                            <select asp-for="inDivisionId" id="ddDivision" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Division</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select asp-for="inDepartmentId" id="ddDepartment" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assign to User</label>
+                            <select asp-for="inAssignUserId" id="ddUser" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.UserList,"id","value"))">
+                                <option value="">Select User</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">File Name</label>
+                            <select asp-for="inStoreFileDetailsId" id="ddFileName" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.FileList,"id","value"))">
+                                <option value="">Select File Name</option>
+                            </select>
+                        </div>
+                        <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
+                        <div class="mb-3">
+                            <label class="form-label">Issue date</label>
+                            <input asp-for="dtIssueDate" type="date" id="txtIssueDate" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Admin" asp-controller="IssueFile" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inlssueFileId">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -1,0 +1,159 @@
+﻿@model CMSBAL.IssueFIleHistory.Models.GetAssignFileDetailResult
+@{
+    Layout = "_LayoutDeskOP";
+    ViewBag.Title = "Assign File Detail";
+
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Assigned File Details</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>Assigned File Detail</h4>
+                    </div>
+                    <form class="custom-validation" asp-action="AcceptAssignFile" asp-controller="AssignFile" asp-area="DeskOP" novalidate="">
+                        <div class="mb-3">
+                            <label class="form-label">SR Id</label>
+                            <input asp-for="inSRId" type="text" class="form-control" readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">File Name</label>
+                            <input asp-for="stFileName" type="text" class="form-control" placeholder="Division Name" readonly>
+                            <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
+
+                        </div>
+                        @*<div class="mb-3">
+            <label class="form-label">User Name</label>
+            <input asp-for="stUserName" type="text" class="form-control" placeholder="Division Name" readonly>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Department Name</label>
+            <input asp-for="stDepartmentName" type="text" class="form-control" placeholder="Division Name" readonly>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Division Name</label>
+            <input asp-for="stDivisionName" type="text" class="form-control" placeholder="Division Name" readonly>
+
+        </div>*@
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea asp-for="stComment" class="form-control" placeholder="Division Name" readonly></textarea>
+
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Accept
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <input hidden asp-for="inAssignUserId" />
+                        <input hidden asp-for="inlssueFileId" />
+                        <input hidden asp-for="inStoreFileDetailsId" />
+                        <input hidden asp-for="inUserProfileId" />
+                        <input hidden asp-for="inCreatedBy" />
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>Assigned By</h4>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input id="txtFirstName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <input id="txtLastName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input id="txtEmail" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile</label>
+                        <input id="txtMobile" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">User Type</label>
+                        <input id="txtUserType" type="text" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>File Detail</h4>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Name</label>
+                        <input id="txtFileName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Employee Name</label>
+                        <input id="txtEmpoloyeeName" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Employee Number</label>
+                        <input id="txtEmployeeNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">PF Number</label>
+                        <input id="txtPFNumber" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mobile</label>
+                        <input id="txtMobile" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">PPO Number</label>
+                        <textarea id="txtPPONumber" class="form-control" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script src="~/Scripts/File/FileDetail.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+    var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
+    var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+
+        $(document).ready(function () {
+            GetUserDetail(@Model.inCreatedBy);
+            GetFileDetail(@Model.inStoreFileDetailsId);
+        });
+    </script>
+}

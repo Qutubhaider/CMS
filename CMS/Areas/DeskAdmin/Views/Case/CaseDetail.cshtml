@@ -1,0 +1,81 @@
+﻿@model CMSBAL.Case.Models.CaseDetailResult
+@{
+    Layout = "_LayoutDeskAdmin";
+    ViewBag.Title = "Case Detail";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Case Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="DeskAdmin" asp-controller="Case" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" novalidate="" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Employee Name</label>
+                            <input asp-for="stEmployeeName" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stEmployeeName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Number</label>
+                            <input asp-for="stEmployeeNumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stEmployeeNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PF Number</label>
+                            <input asp-for="stPFNumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stPFNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PPO Number</label>
+                            <input asp-for="stPPONumber" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stPPONumber" class="text-danger"></span>
+                        </div>
+                      @*  <div class="mb-3">
+                            <label class="form-label">Employee Type</label>
+                            <input asp-for="stEmployeeName" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stEmployeeName" class="text-danger"></span>
+                        </div>*@
+                              <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input asp-for="stMobile" type="text" class="form-control" placeholder="Shelves Number" readonly>
+                            <span asp-validation-for="stMobile" class="text-danger"></span>
+                        </div>
+                       
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        var msGetDivisionDropDown = '@Url.Action("GetDivisionDropdown")';
+        var msGetRoomDropDown = '@Url.Action("GetRoomDropdown")';
+        var msGetAlmirahDropDown = '@Url.Action("GetAlmirahDropdown")';
+        var msGetShelveDropDown ='@Url.Action("GetShelvesDropDown")';
+        var msGetStoreDropDown ='@Url.Action("GetStoreDropDown")';
+            $(document).ready(function () {
+                OnZoneChange(true);
+                OnStoreChange(true);
+                OnRoomChange(true);
+                OnAlmirahChange(true);
+                OnDivisionChangeLoadStore(true);
+        });
+    </script>
+    <script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
+}

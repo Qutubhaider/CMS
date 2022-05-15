@@ -1,0 +1,37 @@
+﻿@model dynamic
+@using CMSBAL.FIle.Models
+@using CMSUtility.Utilities
+@using CMSUtility.Models
+
+
+
+@if (Model.GetFileList != null && Model.GetFileList.Count > 0)
+{
+    foreach (FileListResult loFileList in Model.GetFileList)
+    {
+        <tr>
+            <td>@loFileList.stEmployeeName</td>
+            <td>@loFileList.stDivisionName</td>
+            <td>@loFileList.stDepartmentName</td>
+            <td>@loFileList.stFileName</td>
+            <td class="text-center"><a asp-area="Divisions" asp-controller="File" asp-action="Detail" asp-route-id="@loFileList.unStoreFileDetailsId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
+@{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
+}
+

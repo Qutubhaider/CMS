@@ -1,0 +1,59 @@
+﻿@model CMSBAL.Designation.Models.Designation
+@{
+    Layout = "_LoyoutDivision";
+    ViewBag.Title = "Add Designation";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Add Designation</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Divisions" asp-controller="Designation" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveDesignation" asp-controller="Designation" asp-area="Divisions" class="custom-validation" novalidate="">
+                        <div class="mb-3">
+                            <label class="form-label">Department Name</label>
+                            <select id="ddDepartment" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department Name</option>
+                            </select>
+                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Designation Name</label>
+                            <input asp-for="stDesignationName" type="text" class="form-control" placeholder="Designation Name">
+                            <span asp-validation-for="stDesignationName" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Divisions" asp-controller="Designation" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inDepartmentId" value="0" />
+                        <input type="hidden" asp-for="inDivisionId" value="0" />
+                        <input type="hidden" asp-for="inZoneId" value="0" />
+                        <input type="hidden" asp-for="inDesignationId" />
+                        <input type="hidden" asp-for="unDesignationId" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

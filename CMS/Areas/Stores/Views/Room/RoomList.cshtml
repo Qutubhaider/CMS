@@ -1,0 +1,114 @@
+﻿@{
+    Layout = "_LayoutStores";
+    ViewBag.Title = "Manage Room";
+    var loTableHeaders = new[]
+    {
+        new {Id="3", Visible=false, Title="Zone Name",        Sort = true,   dbColName = "stZoneName",        CssClass = ""},
+        new {Id="4", Visible=false, Title="Division Name",    Sort = true,   dbColName = "stDivisionName",    CssClass = ""},
+        new {Id="5", Visible=false, Title="Department Name",  Sort = true,   dbColName = "stDepartmentName",  CssClass = ""},
+        new {Id="1", Visible=true, Title="Store Name",       Sort = true,   dbColName = "stStoreName",       CssClass = ""},
+        new {Id="2", Visible=true, Title="Room Number",      Sort = true,   dbColName = "stRoomNumber",      CssClass = ""},
+        new {Id="6", Visible=true, Title="",                 Sort = false,  dbColName = "",                  CssClass = ""}
+    };
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Manage Room</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-info" style="float: right;" asp-area="Stores" asp-controller="Room" asp-action="Detail">Add Room</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="dataTables_length" id="datatable_length">
+                                    <label>
+                                        Show
+                                        <select style="display:none; width: 67px;" id="ddPageSize" onchange="getRoomData();" name="size" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm">
+                                            <option>10</option>
+                                            <option>20</option>
+                                            <option>30</option>
+                                            <option>40</option>
+                                            <option>50</option>
+                                        </select>
+                                        <span id="spnNoOfRecordsMessage"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div id="datatable_filter" class="dataTables_filter">
+                                    <label>Search:<input type="search" id="txtRoomNumber" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                                    &nbsp;
+                                    <button onclick="getRoomData();" class="btn btn-info">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" id="RoomList">
+
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
+                                <thead>
+                                    <tr role="row">
+                                        @{
+                                            int lsSortIndex = 0;
+                                            string lsSortOrder = "";
+                                            @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
+                                            {
+                                                <th class="@loHeader.CssClass" id="@loHeader.Id">
+                                                    @if (loHeader.Sort)
+                                                    {
+                                                        string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
+                                                        string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
+                                                        <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
+                                                    }
+                                                    else
+                                                        @loHeader.Title
+
+
+
+                                                    </th>
+                                            }
+                                        }
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mx-0 pagination_wrap">
+                        <div class="dataTables_paginate paging_full_numbers clearfix text-center">
+                            <div class="pagination" id="paginationList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> <!-- end col -->
+</div>
+<input id="hdnPageNoListPanel" type="hidden" value="1" />
+@section Scripts {
+
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script type="text/javascript">
+    var msGetRoomDataList = '@Url.Action("GetRoomList")';
+        $(document).ready(function () {
+            getRoomData();
+
+    });
+</script>
+<script src="~/Scripts/Room/RoomList.js" asp-append-version="true"></script>
+}

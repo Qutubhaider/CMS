@@ -1,0 +1,51 @@
+﻿@model CMSBAL.Department.Models.Department
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Add Department";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Add Department</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Admin" asp-controller="Department" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="SaveDepartment" asp-controller="Department" asp-area="Admin" class="custom-validation" novalidate="">
+                        <div class="mb-3">
+
+                            <label class="form-label">Department Name</label>
+                            <input type="text" asp-for="stDepartmentName" class="form-control" placeholder="Department Name">
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Admin" asp-controller="Department" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inDepartmentId" />
+                        <input type="hidden" asp-for="unDepartmentId" />
+                        <input type="hidden" asp-for="inZoneId" value="0" />
+                        <input type="hidden" asp-for="inDivisionId" value="0" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

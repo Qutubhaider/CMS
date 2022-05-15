@@ -1,0 +1,129 @@
+﻿@model CMSBAL.FIle.Models.FileDetail
+@{
+    Layout = "_LayoutStores";
+    ViewBag.Title = "Shelves Detail";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Shelves Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="Shelves" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <form class="custom-validation" asp-action="SaveFile" asp-controller="File" asp-area="Stores" novalidate="" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Room Number</label>
+                            <select id="ddRoom" asp-for="inRoomId" onchange="OnRoomChange();" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.RoomList,"id","value"))">
+                                <option value="">Select Room Number</option>
+                            </select>
+                            <span asp-validation-for="inRoomId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Almirah Number</label>
+                            <select asp-for="inAlmirahId" id="ddAlmirah" onchange="OnAlmirahChange();" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select Almirah Number</option>
+                            </select>
+                            <span asp-validation-for="inAlmirahId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Shelve Number</label>
+                            <select asp-for="inShelvesId" id="ddShelve" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select shelve Number</option>
+                            </select>
+                            <span asp-validation-for="inShelvesId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">File</label>
+                            <input type="file" class="filestyle" asp-for="File" data-buttonname="btn-secondary" />
+                            <span asp-validation-for="stFileName" class="text-danger"></span>
+                            @if (Model.stFileName != null || Model.stFileName != string.Empty)
+                            {
+                                <input type="hidden" asp-for="stFileName" />
+                                <input type="hidden" asp-for="stUnFileName" />
+                            <a asp-action="DownloadFile" asp-controller="File" asp-area="Stores" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">@Model.stFileName</a>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Name</label>
+                            <input asp-for="stEmployeeName" type="text" class="form-control" placeholder="Employee Name">
+                            <span asp-validation-for="stEmployeeName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Number</label>
+                            <input asp-for="stEmployeeNumber" type="text" class="form-control" placeholder="Employee Number">
+                            <span asp-validation-for="stEmployeeNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PPO Number</label>
+                            <input asp-for="stPPONumber" type="text" class="form-control" placeholder="PPO Number">
+                            <span asp-validation-for="stPPONumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PF Number</label>
+                            <input asp-for="stPFNumber" type="text" class="form-control" placeholder="PF Number">
+                            <span asp-validation-for="stPFNumber" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input asp-for="stMobile" type="text" class="form-control" placeholder="Mobile Number">
+                            <span asp-validation-for="stMobile" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select asp-for="inStatus" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                            <span asp-validation-for="inStatus" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" asp-for="inShelvesId" />
+                        <input type="hidden" asp-for="inZoneId" />
+                        <input type="hidden" asp-for="inDepartmentId" />
+                        <input type="hidden" asp-for="inDivisionId" />
+                        <input type="hidden" asp-for="inStoreId" />
+                        <input type="hidden" asp-for="inRoomId" />
+                        <input type="hidden" asp-for="inAlmirahId" />
+                        <input type="hidden" asp-for="inStoreFileDetail" />
+                        <input type="hidden" asp-for="unStoreFileDetail" />
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+    <script type="text/javascript">       
+        var msGetAlmirahDropDown = '@Url.Action("GetAlmirahDropdown")';
+        var msGetShelveDropDown ='@Url.Action("GetShelvesDropDown")';
+            $(document).ready(function () {             
+                OnRoomChange(true);
+                OnAlmirahChange(true);
+        });
+    </script>
+    <script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
+}
