@@ -39,7 +39,7 @@
                                 <option value="">Select User</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" style="display:none;">
                             <label class="form-label">File Name</label>
                             <select asp-for="inStoreFileDetailsId" id="ddFileName" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.FileList,"id","value"))">
                                 <option value="">Select File Name</option>

@@ -37,6 +37,10 @@ namespace CMSBAL.Repository
             return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getCategoryDropDown").ToList();
         }
 
+        public List<Select2> GetCategory(int fiDepartmentId)
+        {
+            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getCategory @inDepartmentId={fiDepartmentId}").ToList();
+        }
         public void SaveCategory(Category.Models.Category foCategory, int fiUserId,out int fiSuccesss)
         {
             SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };

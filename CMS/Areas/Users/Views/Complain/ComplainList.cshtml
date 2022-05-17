@@ -1,15 +1,15 @@
 ﻿@{
-    Layout = "_LayoutDeskOP";
-    ViewBag.Title = "My Assign File";
+    Layout = "_LayoutUsers";
+    ViewBag.Title = "My Complain " ;
     var loTableHeaders = new[]
-    {
-        new { Id = "0", Visible = true, Title = "SRID",  Sort = true,   dbColName = "inSRID",  CssClass = ""},
-        new {Id="1", Visible=true, Title="Assigned By",   Sort = true,   dbColName = "stUserName",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Department", Sort = true,   dbColName = "stDepartment", CssClass = ""},        
-        new {Id="33", Visible=true, Title="Complain",  Sort = true,   dbColName = "stComment",   CssClass = ""},
-        new {Id="4", Visible=true, Title="Status",  Sort = true,   dbColName = "inStatus",   CssClass = ""},
-        new {Id="5", Visible=true, Title="Issue Date", Sort = true,   dbColName = "dtIssueDate",  CssClass = ""},
-        new {Id="",  Visible=true, Title="Action",     Sort = false,  dbColName = "",             CssClass = ""}
+   {
+        new {Id="1", Visible=true, Title="Assign To",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Assigned By",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
+        new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Issue Date",   Sort = true,   dbColName = "dtIssueDate",   CssClass = ""},
+        new {Id="",  Visible=true, Title="Action",   Sort = false,  dbColName = "",           CssClass = ""}
     };
 }
 <div class="container-fluid">
@@ -17,8 +17,11 @@
     <div class="row">
         <div class="col-8">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">My Assigned Files</h4>
+                <h4 class="mb-sm-0">My Complain</h4>
             </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-info" style="float: right;" asp-area="Users" asp-controller="Complain" asp-action="AddComplain">New Complain</a>
         </div>
     </div>
     <div class="row">
@@ -73,6 +76,7 @@
         </div>
     </div> <!-- end col -->
 </div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial.cshtml" />
     <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>

@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[tblZone]
+(
+    inZoneId INT IDENTITY(1,1) PRIMARY KEY,
+    unZoneId UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
+    stZoneName	NVARCHAR(200) NOT NULL,
+    dtCreateDate DATETIME NOT NULL,
+    inCreatedBy	INT NOT NULL
+)

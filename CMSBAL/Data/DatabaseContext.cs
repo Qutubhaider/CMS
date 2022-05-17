@@ -60,6 +60,7 @@ namespace CMSBAL.Data
         public DbSet<TraceFileResults> TraceFileResults { get; set; }
         public DbSet<CategoryListResult> CategoryListResult { get; set; }
         public DbSet<Category.Models.Category> Category { get; set; }
+        public DbSet<Complain.Models.Complain> Complain { get; set; }
 
         protected override void OnModelCreating(ModelBuilder foModelbuilder)
         {
@@ -97,6 +98,7 @@ namespace CMSBAL.Data
             foModelbuilder.Entity<TraceFileResults>().HasNoKey();
             foModelbuilder.Entity<CategoryListResult>().HasNoKey();
             foModelbuilder.Entity<Category.Models.Category>().HasNoKey();
+            foModelbuilder.Entity<Complain.Models.Complain>().HasNoKey();
             base.OnModelCreating(foModelbuilder);
         }
     }

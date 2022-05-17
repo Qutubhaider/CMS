@@ -56,5 +56,29 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Fucntions" />
+    <Folder Include="dbo\StoredProcedures" />
+    <Folder Include="dbo\table" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Fucntions\getDateTimeByTimezone.sql" />
+    <Build Include="dbo\table\tblAlmirah.sql" />
+    <Build Include="dbo\table\tblCase.sql" />
+    <Build Include="dbo\table\tblCategoryMaster.sql" />
+    <Build Include="dbo\table\tblDepartment.sql" />
+    <Build Include="dbo\table\tblDesignation.sql" />
+    <Build Include="dbo\table\tblDeskDetail.sql" />
+    <Build Include="dbo\table\tblDivision.sql" />
+    <Build Include="dbo\table\tblIssueFileHistory.sql" />
+    <Build Include="dbo\table\tblRoom.sql" />
+    <Build Include="dbo\table\tblServiceRequest.sql" />
+    <Build Include="dbo\table\tblShelve.sql" />
+    <Build Include="dbo\table\tblStore.sql" />
+    <Build Include="dbo\table\tblStoreFileDetails.sql" />
+    <Build Include="dbo\table\tblUser.sql" />
+    <Build Include="dbo\table\tblUserDetails.sql" />
+    <Build Include="dbo\table\tblUserProfile.sql" />
+    <Build Include="dbo\table\tblZone.sql" />
   </ItemGroup>
 </Project>
