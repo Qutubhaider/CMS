@@ -22,13 +22,18 @@
                 <div class="card-body">
                     <form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Stores" class="custom-validation" novalidate="">
 
-                        <div class="mb-3">
+                        <div class="mb-3" >
                             <label class="form-label">Employee Name || Employee No || PPO No || PF No</label>
                             <select onchange="GetFileDetail($('#inStoreFileDetailsId').val());" asp-for="inStoreFileDetailsId" id="ddFileName" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.FileList,"id","value"))">
                                 <option value="">Select File Name</option>
                             </select>
+                            <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
                         </div>
-                        <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Complain</label>
+                            <textarea asp-for="stComment" class="form-control"></textarea>
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label">Department</label>
