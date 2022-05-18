@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace CMSBAL.Complain.Models
         public List<Select2> CategoryList { get; set; }
         public List<Select2> SubCategoryList { get; set; }
         public List<Select2> DepartmentList { get; set; }
-        //public IFormFile File { get; set; }
+        [NotMapped]
+        public IFormFile File { get; set; }
+        public string stUnFileName { get; set; }
+
+        public string stFileName { get; set; }
     }
 }

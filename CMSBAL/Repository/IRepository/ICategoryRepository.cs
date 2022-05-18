@@ -14,5 +14,6 @@ namespace CMSBAL.Repository.IRepository
         public List<Category.Models.CategoryListResult> GetCategoriesList();
         public List<Select2> GetCategoryDropDown();
         public List<Select2> GetCategory(int fiDepartmentId);
+        public List<Select2> GetSubCategoryDropDown(int fiParentCategoryId);
     }
 }

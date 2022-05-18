@@ -24,6 +24,7 @@ namespace CMSBAL.Repository.IRepository
         ICaseRepository CaseRepository { get; }
         IDashboardRepository DashboardRepository { get; }
         ICategoryRepository CategoryRepository { get; }
+        IComplainRepository ComplainRepository { get; }
         void Save();
     }
 }

@@ -39,7 +39,11 @@ namespace CMSBAL.Repository
 
         public List<Select2> GetCategory(int fiDepartmentId)
         {
-            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getCategory @inDepartmentId={fiDepartmentId}").ToList();
+            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getCategory @inDepartment={fiDepartmentId}").ToList();
+        }
+        public List<Select2> GetSubCategoryDropDown(int fiParentCategoryId)
+        {
+            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getSubCategoryDropDown @inParentCategory={fiParentCategoryId}").ToList();
         }
         public void SaveCategory(Category.Models.Category foCategory, int fiUserId,out int fiSuccesss)
         {

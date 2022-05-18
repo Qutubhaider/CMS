@@ -191,3 +191,55 @@ function OnSChange(flgIsEdit = false) {
             $("#ddDesignation").val($("#inDesignationId").val());
     }, function () { });
 }
+
+function OnDepartmentChangeLoadCategory(flgIsEdit = false) {
+    var loData = new Object();
+    if (flgIsEdit) {
+        var liDepartmentId = $('#inDepartmentId').val();
+    }
+    else {
+        var liDepartmentId = $('#ddDepartment').val();
+    }
+
+    loData.fiDepartmentId = liDepartmentId;
+    if ($("#ddParentCategory").length > 0) {
+        $("#ddParentCategory").empty();
+        $("#ddParentCategory").append("<option value='" + "" + "'>" + "Select Category" + "</option>");
+    }
+    if ($("#ddSubCategory").length > 0) {
+        $("#ddSubCategory").empty();
+        $("#ddSubCategory").append("<option value='" + "" + "'>" + "Select Sub Category" + "</option>");
+    }
+    loadMyRequest(msGetCategoryDropDown, "GET", loData, function (response) {
+        //console.log(response);
+        $("#ddParentCategory").empty();
+        $("#ddParentCategory").append("<option value='" + "" + "'>" + "Select Category" + "</option>");
+        response.data.forEach(d => $("#ddParentCategory").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+        if (flgIsEdit)
+            $("#ddParentCategory").val($("#inCategoryId").val());
+    }, function () { });
+}
+
+function OnParentCategoryChangeLoadSubCategory(flgIsEdit = false) {
+    var loData = new Object();
+    if (flgIsEdit) {
+        var liParentCategoryId = $('#inParentCategoryId').val();
+    }
+    else {
+        var liParentCategoryId = $('#ddParentCategory').val();
+    }
+
+    loData.fiParentCategoryId = liParentCategoryId;
+    if ($("#ddSubCategory").length > 0) {
+        $("#ddSubCategory").empty();
+        $("#ddSubCategory").append("<option value='" + "" + "'>" + "Select Sub Category" + "</option>");
+    }
+    loadMyRequest(msGetSubCategoryDropDown, "GET", loData, function (response) {
+        //console.log(response);
+        $("#ddSubCategory").empty();
+        $("#ddSubCategory").append("<option value='" + "" + "'>" + "Select Sub Category" + "</option>");
+        response.data.forEach(d => $("#ddSubCategory").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+        if (flgIsEdit)
+            $("#ddSubCategory").val($("#inSubCategoryId").val());
+    }, function () { });
+}
