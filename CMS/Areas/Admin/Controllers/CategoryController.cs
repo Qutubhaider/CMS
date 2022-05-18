@@ -42,7 +42,7 @@ namespace FileSystemWeb.Areas.Admin.Controllers
         public IActionResult SaveCategory(CMSBAL.Category.Models.Category foCategory)
         {
             int liSuccess = 0;
-            int liUserId = Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()); //User.FindFirst(SessionConstant)
+            int liUserId = Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()); 
             if (foCategory != null)
             {
                 moUnitOfWork.CategoryRepository.SaveCategory(foCategory, liUserId, out liSuccess);
@@ -57,7 +57,6 @@ namespace FileSystemWeb.Areas.Admin.Controllers
                     TempData["ResultCode"] = CommonFunctions.ActionResponse.Update;
                     TempData["Message"] = string.Format(AlertMessage.RecordUpdated, "Category");
                     return RedirectToAction("Index");
-
                 }
                 else
                 {
@@ -65,7 +64,6 @@ namespace FileSystemWeb.Areas.Admin.Controllers
                     TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving category");
                     return RedirectToAction("Index");
                 }
-
             }
             return RedirectToAction("Index");
         }

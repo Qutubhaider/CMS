@@ -21,33 +21,33 @@
             <div class="card">
                 <div class="card-body">
                     <form asp-action="SaveCategory" asp-controller="Category" asp-area="Admin" class="custom-validation" novalidate="">
-                         <div class="mb-3">
+                        <div class="mb-3">
                             <label class="form-label">Departments</label>
-                           <select id="ddDepartment" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Department" asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                            <select id="ddDepartment" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Department" asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
                                 <option value="">Select Department</option>
                             </select>
                             <span asp-validation-for="inDepartmentId" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Category Name</label>
-                            <input type="text" asp-for= "stCategoryName" class="form-control" placeholder="Category Name">
-                             <span asp-validation-for="stCategoryName" class="text-danger"></span>
+                            <input type="text" asp-for="stCategoryName" class="form-control" placeholder="Category Name">
+                            <span asp-validation-for="stCategoryName" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Select Parent Category</label>
-                         <select id="ddParentCategory" asp-for="inParentCategoryId" class="select2 form-control select2-multiple" data-placeholder="Self"asp-items="@(new SelectList(Model.CategoryList,"id","value"))">
+                            <select id="ddParentCategory" asp-for="inParentCategoryId" class="select2 form-control select2-multiple" data-placeholder="Self" asp-items="@(new SelectList(Model.CategoryList,"id","value"))">
                                 <option value="0">Self</option>
                             </select>
-                             <span asp-validation-for="inParentCategoryId" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
+                            <span asp-validation-for="inParentCategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Status</label>
-                         <select id="ddStatus" asp-for="inStatus" class="select2 form-control select2-multiple" data-placeholder="Select Status">
+                            <select id="ddStatus" asp-for="inStatus" class="select2 form-control select2-multiple" data-placeholder="Select Status">
                                 <option value="0">InActive</option>
                                 <option value="1">Active</option>
                             </select>
-                             <span asp-validation-for="inParentCategoryId" class="text-danger"></span>
-                            </div>
+                            <span asp-validation-for="inStatus" class="text-danger"></span>
+                        </div>
                         <div>
                             <div>
                                 <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
@@ -58,8 +58,8 @@
                                 </a>
                             </div>
                         </div>
-                     <input type="hidden" asp-for=inCategoryId/>
-                     <input type="hidden" asp-for=unCategoryId/>
+                        <input type="hidden" asp-for=inCategoryId />
+                        <input type="hidden" asp-for=unCategoryId />
                     </form>
                 </div>
             </div>
