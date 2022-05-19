@@ -8,6 +8,6 @@ namespace CMSBAL.Repository.IRepository
 {
     public interface IComplainRepository
     {
-        void SaveComplain(Complain.Models.Complain foComplain,int liZoneId,int liDivisionId, int fiUserId, out int fiSuccess);
+        void SaveComplain(Complain.Models.Complain foComplain,int liZoneId,int liDivisionId, int fiUserId,int fiStoreId, out int fiSuccess);
     }
 }

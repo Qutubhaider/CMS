@@ -3,7 +3,7 @@
     Layout = "_LayoutSignup";
 }
 <h4 class="font-size-18 text-muted mt-2 text-center">Complain Management System</h4>
-<p class="mb-5 text-center">Sign up to continue to Complain Management System.</p>
+<p class="mb-5 text-center">Sign up to continue to complain management system.</p>
 
 <form class="form-horizontal" asp-action="SaveUser" asp-controller="Home" novalidate="" method="post">
     <input type="hidden" value="7" asp-for="inRole" />
@@ -17,7 +17,6 @@
     <div class="mb-3">
         <label class="form-label">Division Name</label>
         <select id="ddDivision" onchange="OnDivisionChangeLoadDesk();OnDivisionChangeLoadStore();" asp-for="inDivisionId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-           
         </select>
     </div>
     <div class="mb-3">
@@ -35,17 +34,17 @@
         <span asp-validation-for="inDesignationId" class="text-danger"></span>
     </div>
     @* <div class="mb-3">
-            <label class="form-label">Desk Name</label>
-            <select id="ddDesk" asp-for="inDeskid" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                <option value="">Select Zone Name</option>
-            </select>
+        <label class="form-label">Desk Name</label>
+        <select id="ddDesk" asp-for="inDeskid" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+        <option value="">Select Zone Name</option>
+        </select>
         </div>
         <div class="mb-3">
-            <label class="form-label">Store Name</label>
-            <select id="ddStore" asp-for="inStoreId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                <option value="">Select Store Name</option>
+        <label class="form-label">Store Name</label>
+        <select id="ddStore" asp-for="inStoreId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+        <option value="">Select Store Name</option>
 
-            </select>
+        </select>
         </div>*@
     <input type="hidden" value="0" asp-for="inDeskid" />
     <input type="hidden" value="0" asp-for="inStoreId" />
@@ -78,7 +77,8 @@
         <label class="form-label">Employee Type</label>
         <select asp-for="inEmployeeType" class="form-control" data-placeholder="Choose ...">
             <option value="">Select Employee Type</option>
-            <option value="0" selected>Employee Type</option>
+            <option value="Retired">Retired</option>
+             <option value="Serving">Serving</option>
         </select>
     </div>
     <div class="mb-3">
@@ -86,12 +86,12 @@
         <input asp-for="stPFNumber" type="text" class="form-control" placeholder="PF Number">
         <span asp-validation-for="stPFNumber" class="text-danger"></span>
     </div>
-        <div class="mb-3">
+    <div class="mb-3">
         <label class="form-label">Employee Number</label>
         <input asp-for="stEmployeeNumber" type="text" class="form-control" placeholder="Employee Number">
         <span asp-validation-for="stEmployeeNumber" class="text-danger"></span>
     </div>
-        <div class="mb-3">
+    <div class="mb-3">
         <label class="form-label">PPO Number</label>
         <input asp-for="stPPONumber" type="text" class="form-control" placeholder="PPO Number">
         <span asp-validation-for="stPPONumber" class="text-danger"></span>
@@ -109,9 +109,9 @@
     </div>
 </form>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial.cshtml" />
-    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
-    <script type="text/javascript">
+<partial name="_ValidationScriptsPartial.cshtml" />
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script type="text/javascript">
     var msGetDivisionDropDown = '@Url.Action("GetDivisionDropdown")';
     var msGetDeskDropDown =  '@Url.Action("GetDeskDropdown")';
     var msGetDesignationDropDown = '@Url.Action("GetDesignationDropDown")';
@@ -122,6 +122,6 @@
             OnDivisionChangeLoadStore(true);
             OnDepartmentChange(true);
     });
-    </script>
-    <script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
+</script>
+<script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
 }

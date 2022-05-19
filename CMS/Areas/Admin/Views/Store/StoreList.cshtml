@@ -1,12 +1,12 @@
 ﻿@{
     Layout = "_LayoutAdmin";
-    ViewBag.Title = "Manage Store";
+    ViewBag.Title = "Manage Receptionist";
     var loTableHeaders = new[]
     {        
-        new {Id="2", Visible=true, Title="Zone Name",        Sort = true,   dbColName = "stZoneName",        CssClass = ""},
-        new {Id="3", Visible=true, Title="Division Name",    Sort = true,   dbColName = "stDivisionName",    CssClass = ""},
-        new {Id="4", Visible=true, Title="Department Name",  Sort = true,   dbColName = "stDepartmentName",  CssClass = ""},
-        new {Id="1", Visible=true, Title="Store Name",       Sort = true,   dbColName = "stStoreName",       CssClass = ""},
+        new {Id="2", Visible=true, Title="Zone",        Sort = true,   dbColName = "stZoneName",        CssClass = ""},
+        new {Id="3", Visible=true, Title="Division",    Sort = true,   dbColName = "stDivisionName",    CssClass = ""},
+        new {Id="4", Visible=true, Title="Department",  Sort = true,   dbColName = "stDepartmentName",  CssClass = ""},
+        new {Id="1", Visible=true, Title="Receptionist",       Sort = true,   dbColName = "stStoreName",       CssClass = ""},
         new {Id="0", Visible=true, Title="Action",           Sort = false,  dbColName = "",                  CssClass = ""}
     };
 }
@@ -15,11 +15,11 @@
     <div class="row">
         <div class="col-8">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Manage Store</h4>
+                <h4 class="mb-sm-0">Manage Receptionist</h4>
             </div>
         </div>
         <div class="col-4" style="float:right;">
-            <a class="btn btn-info" style="float: right;" asp-area="Admin" asp-controller="Store" asp-action="Detail">Add Store</a>
+            <a class="btn btn-info" style="float: right;" asp-area="Admin" asp-controller="Store" asp-action="Detail">Add Receptionist</a>
         </div>
     </div>
     <div class="row">

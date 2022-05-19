@@ -156,10 +156,7 @@ namespace FileSystemWeb.Controllers
                                 return RedirectToAction("Index", "Dashboard", new { area = "Users" });
                             else
                                 return RedirectToAction("Index", "Dashboard", new { area = "DeskOP" });
-
-                           
                         }
-
                     }
                     else
                     {

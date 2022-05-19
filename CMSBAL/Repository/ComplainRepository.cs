@@ -20,10 +20,10 @@ namespace CMSBAL.Repository
         {
             moDatabaseContext = foDatabaseContext;
         }
-        public void SaveComplain(Complain.Models.Complain foComplain, int liZoneId, int liDivisionId, int fiUserId, out int fiSuccess)
+        public void SaveComplain(Complain.Models.Complain foComplain, int fiZoneId, int fiDivisionId, int fiUserId,int fiStoreId, out int fiSuccess)
         {
             SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveAlmirah ");
+            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveComplain @inDepartmentId={foComplain.inDepartmentId}, @inCategoryId={foComplain.inCategoryId}, @inSubCategoryId={foComplain.inSubCategoryId}, @stComplainText={foComplain.stComplainText}, @stUnFileName={foComplain.stUnFileName}, @stFileName={foComplain.stFileName}, @inZoneId={fiZoneId}, @inDivisionId={fiDivisionId}, @inStoreId={fiStoreId}, @inUserId={fiUserId}, @inSuccess={loSuccess} OUT ");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
     }

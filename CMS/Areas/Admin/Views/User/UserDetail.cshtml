@@ -23,13 +23,13 @@
                     <form class="custom-validation" asp-action="SaveUserProfile" asp-controller="User" asp-area="Admin" novalidate="">
                         <div class="mb-3">
                             <label class="form-label">Select User Role</label>
-                            <select id="ddRole" asp-for="inRole" class="select2 form-control select2-multiple" onchange="changePanel();" data-placeholder="Choose ...">
+                            <select id="ddRole" asp-for="inRole" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
                                 <option value="">Select Role</option>
                                 <option value="1">Super Admin</option>
                                 <option value="2">Division Admin</option>
                                 <option value="4">Department Admin</option>
                                 <option value="5">Desk Operator</option>
-                                <option value="6">Store Operator</option>
+                                <option value="6">Receptionist Operator</option>
                             </select>
                             <span asp-validation-for="inRole" class="text-danger"></span>
                         </div>
@@ -67,9 +67,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Store Name</label>
+                            <label class="form-label">Receptionist Name</label>
                             <select id="ddStore" asp-for="inStoreId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Store Name</option>
+                                <option value="">Select Receptionist Name</option>
 
                             </select>
                         </div>

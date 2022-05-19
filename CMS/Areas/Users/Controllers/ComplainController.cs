@@ -44,7 +44,8 @@ namespace CMS.Areas.Users.Controllers
                 int liSuccess = 0;
                 int liZoneId = Convert.ToInt32(User.FindFirst(SessionConstant.ZoneId).Value.ToString());
                 int liDivisionId = Convert.ToInt32(User.FindFirst(SessionConstant.DivisionId).Value.ToString());
-                int liUser = Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString());
+                int liUserId = Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString());
+                int liStoreId = Convert.ToInt32(User.FindFirst(SessionConstant.StoreId).Value.ToString());
                 if (foComplain != null)
                 {
                     if (foComplain.File != null)
@@ -58,7 +59,7 @@ namespace CMS.Areas.Users.Controllers
                             foComplain.File.CopyTo(fileStream);
                         }
                     }
-                    //moUnitOfWork.ComplainRepository.SaveComplain(foComplain, liZoneId, liDivisionId, out liSuccess);
+                    moUnitOfWork.ComplainRepository.SaveComplain(foComplain, liZoneId, liDivisionId, liUserId, liStoreId, out liSuccess);
                     if (liSuccess == (int)CommonFunctions.ActionResponse.Add)
                     {
                         TempData["ResultCode"] = CommonFunctions.ActionResponse.Add;
