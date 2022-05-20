@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System;
 using static CMSUtility.Utilities.CommonConstant;
 using CMSUtility.Utilities;
+using System.Text;
+using System.Dynamic;
+using CMSUtility.Service.PaginationService;
 
 namespace FileSystemWeb.Areas.Admin.Controllers
 {
@@ -15,15 +18,64 @@ namespace FileSystemWeb.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork moUnitOfWork;
+        private readonly static int miPageSize = 10;
         public CategoryController(IUnitOfWork foUnitOfWork)
         {
             moUnitOfWork = foUnitOfWork;
         }
         public IActionResult Index()
         {
-            List<CategoryListResult> loCategoryList = moUnitOfWork.CategoryRepository.GetCategoriesList();
+            return View();
+        }
 
-            return View(loCategoryList);
+        public IActionResult GetCategoryList(string categoryName, int? Status, int? sort_column, string sort_order, int? pg, int? size)
+        {
+            StringBuilder lolog = new StringBuilder();
+            try
+            {
+                lolog.AppendLine("categoryName : " + categoryName);
+                lolog.AppendLine("Status : " + Status);
+                lolog.AppendLine("Sort Column : " + sort_column);
+                lolog.AppendLine("Sort Order : " + sort_order);
+                lolog.AppendLine("Page No : " + pg);
+                lolog.AppendLine("Page Size : " + size);
+
+                string lsSearch = string.Empty;
+                int liTotalRecords = 0, liStartIndex = 0, liEndIndex = 0;
+                if (sort_column == 0 || sort_column == null)
+                    sort_column = 1;
+                if (string.IsNullOrEmpty(sort_order) || sort_order == "desc")
+                {
+                    sort_order = "desc";
+                    ViewData["sortorder"] = "asc";
+                }
+                else
+                {
+                    ViewData["sortorder"] = "desc";
+                }
+                if (pg == null || pg <= 0)
+                    pg = 1;
+                if (size == null || size.Value <= 0)
+                    size = miPageSize;
+
+                List<CategoryListResult> loCategoryList = new List<CategoryListResult>();
+                loCategoryList = moUnitOfWork.CategoryRepository.GetCategoriesList(categoryName == null ? categoryName : categoryName.Trim(), Status, sort_column, sort_order, pg.Value, size.Value);
+                dynamic loModel = new ExpandoObject();
+                loModel.GetCategoryList = loCategoryList;
+                if (loCategoryList.Count > 0)
+                {
+                    liTotalRecords = loCategoryList[0].inRecordCount;
+                    liStartIndex = loCategoryList[0].inRownumber;
+                    liEndIndex = loCategoryList[loCategoryList.Count - 1].inRownumber;
+                }
+                loModel.Pagination = PaginationService.getPagination(liTotalRecords, pg.Value, size.Value, liStartIndex, liEndIndex);
+                return PartialView("~/Areas/Admin/Views/Category/_CategoryList.cshtml", loModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
         }
 
         public IActionResult Detail(Guid id)

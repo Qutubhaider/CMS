@@ -8,6 +8,8 @@ namespace CMSBAL.Category.Models
 {
     public class CategoryListResult
     {
+        public int inRecordCount { get; set; }
+        public int inRownumber { get; set; }
         public int inCategoryId { get; set; }
         public Guid unCategoryId { get; set; }
         public string stParentCategoryName { get; set; }

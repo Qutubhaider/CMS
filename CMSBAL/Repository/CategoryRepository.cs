@@ -20,11 +20,10 @@ namespace CMSBAL.Repository
         {
             moDatabaseContext = foDatabaseContext;
         }
-        public List<CategoryListResult> GetCategoriesList()
+        public List<CategoryListResult> GetCategoriesList(string categoryName, int? finStatus, int? fiSortColumn, string fsSortOrder, int? fiPageNo, int? fiPageSize)
         {
-            return moDatabaseContext.Set<CategoryListResult>().FromSqlInterpolated($"EXEC getCategoryList").ToList();
+            return moDatabaseContext.Set<CategoryListResult>().FromSqlInterpolated($"EXEC getCategoryList @stCategoryName={categoryName}, @inStatus={finStatus},@inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder},@inPageNo={fiPageNo},@inPageSize={fiPageSize}").ToList();
         }
-
         public CMSBAL.Category.Models.Category GetCategory(Guid unCategoryId)
         {
 
