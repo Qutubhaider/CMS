@@ -18,14 +18,14 @@ function sort(fsSortColumn, element) {
 }
 function getCategoryData(fsPageNo, fsSortColumn = lsSortCol, fsSortDirection = lsSortOrder) {
     showLoading();
-    var lsCategoryTitle = '';
+    var lsCategoryTitle = $('#txtCategoryTitle').val();
     var liStatus = '';
     var liSize = $('#ddPageSize').val();
 
     var loData = new Object();
     var pg = fsPageNo;
 
-    loData.Category = lsCategoryTitle;
+    loData.categoryName = lsCategoryTitle;
     loData.Status = liStatus;
     loData.sort_column = fsSortColumn;
     loData.sort_order = fsSortDirection;
