@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using CMSUtility.Utilities;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.Text;
+using System.Dynamic;
+using CMSUtility.Service.PaginationService;
 
 namespace CMS.Areas.Users.Controllers
 {
@@ -26,9 +29,60 @@ namespace CMS.Areas.Users.Controllers
             moUnitOfWork = foUnitOfWork;
             moWebHostEnvironment = foWebHostEnvironment;
         }
+
         public IActionResult Index()
         {
             return View("~/Areas/Users/Views/Complain/ComplainList.cshtml");
+        }
+
+        public IActionResult GetComplainList(string complain, int? Status, int? sort_column, string sort_order, int? pg, int? size)
+        {
+            StringBuilder lolog = new StringBuilder();
+            try
+            {
+                lolog.AppendLine("categoryName : " + complain);
+                lolog.AppendLine("Status : " + Status);
+                lolog.AppendLine("Sort Column : " + sort_column);
+                lolog.AppendLine("Sort Order : " + sort_order);
+                lolog.AppendLine("Page No : " + pg);
+                lolog.AppendLine("Page Size : " + size);
+
+                string lsSearch = string.Empty;
+                int liTotalRecords = 0, liStartIndex = 0, liEndIndex = 0;
+                if (sort_column == 0 || sort_column == null)
+                    sort_column = 1;
+                if (string.IsNullOrEmpty(sort_order) || sort_order == "desc")
+                {
+                    sort_order = "desc";
+                    ViewData["sortorder"] = "asc";
+                }
+                else
+                {
+                    ViewData["sortorder"] = "desc";
+                }
+                if (pg == null || pg <= 0)
+                    pg = 1;
+                if (size == null || size.Value <= 0)
+                    size = miPageSize;
+
+                List<ComplainListResultUser> loComplainList = new List<ComplainListResultUser>();
+                loComplainList = moUnitOfWork.ComplainRepository.GetComplainList(complain == null ? complain : complain.Trim(), Status, sort_column, sort_order, pg.Value, size.Value);
+                dynamic loModel = new ExpandoObject();
+                loModel.GetComplainList = loComplainList;
+                if (loComplainList.Count > 0)
+                {
+                    liTotalRecords = loComplainList[0].inRecordCount;
+                    liStartIndex = loComplainList[0].inRownumber;
+                    liEndIndex = loComplainList[loComplainList.Count - 1].inRownumber;
+                }
+                loModel.Pagination = PaginationService.getPagination(liTotalRecords, pg.Value, size.Value, liStartIndex, liEndIndex);
+                return PartialView("~/Areas/Users/Views/Complain/_ComplainList.cshtml", loModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
         }
         public IActionResult AddComplain()
         {

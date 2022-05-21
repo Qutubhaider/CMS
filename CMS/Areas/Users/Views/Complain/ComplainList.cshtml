@@ -5,10 +5,9 @@
    {
         new {Id="1", Visible=true, Title="Assign To",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
         new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Assigned By",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
-        new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Issue Date",   Sort = true,   dbColName = "dtIssueDate",   CssClass = ""},
+        new {Id="3", Visible=true, Title="Assigned By",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+        new {Id="4", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
+        new {Id="5", Visible=true, Title="Issue Date",   Sort = true,   dbColName = "dtIssueDate",   CssClass = ""},
         new {Id="",  Visible=true, Title="Action",   Sort = false,  dbColName = "",           CssClass = ""}
     };
 }
@@ -86,5 +85,5 @@
             getIssueFileData();
          });
     </script>
-    <script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
+    <script src="~/Scripts/Complain/ComplainUserList.js" asp-append-version="true"></script>
 }

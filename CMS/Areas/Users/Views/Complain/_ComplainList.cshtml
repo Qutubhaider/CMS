@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model dynamic;
+@using CMSBAL.Complain.Models;
+@using CMSUtility.Utilities;
+@using CMSUtility.Models;
+
+@if (Model.GetComplainList != null && Model.GetComplainList.Count > 0)
+{
+    foreach (ComplainListResultUser complain in Model.GetComplainList)
+    {
+        <tr>
+            <td>@complain.stAssignTo</td>
+            <td>@complain.stDepartment</td>
+            <td>@complain.stAssignedBy</td>
+            <td>@complain.stComplain</td>
+            <td>@complain.dtIssueDate</td>
+            <td class="text-center"><a asp-area="User" asp-controller="Complain" asp-action="Detail" asp-route-id="@complain.unComplainId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
+       </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="8" class="text-center py-5">No records found.</td>
+    </tr>
+}
+
 @{
+    Pagination loPagination = Model.Pagination;
+
+    <input type="hidden" id="hdnCurrentPage" value="@loPagination.inCurrentPage">
+    <input type="hidden" id="hdnTotalPage" value="@loPagination.inTotalPages" />
+    <input type="hidden" id="hdnTotalRecords" value="@loPagination.inTotalRecords" />
+    <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
+
 }
