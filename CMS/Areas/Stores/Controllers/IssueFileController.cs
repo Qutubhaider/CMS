@@ -98,7 +98,7 @@ namespace FileSystemWeb.Areas.Stores.Controllers
             }
         }
 
-        public IActionResult GetIssueFileList1(string fsFileName, int? Status, int? sort_column, string sort_order, int? pg, int? size)
+        public IActionResult GetIssueFileList1(int SRId, int? sort_column, string sort_order, int? pg, int? size)
         {
             StringBuilder lolog = new StringBuilder();
             try
@@ -122,7 +122,7 @@ namespace FileSystemWeb.Areas.Stores.Controllers
                     size = miPageSize;
 
                 List<IssueFileListResult> loIssueFileListResult = new List<IssueFileListResult>();
-                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileListByStore(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value, null, Convert.ToInt32(User.FindFirst(SessionConstant.DepartmentId).Value.ToString()));
+                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileListBySR(SRId, sort_column, sort_order, pg.Value, size.Value);
                 dynamic loModel = new ExpandoObject();
                 loModel.GetIssueFileList = loIssueFileListResult;
                 if (loIssueFileListResult.Count > 0)

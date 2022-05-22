@@ -22,7 +22,6 @@ namespace CMSBAL.IssueFIleHistory.Models
         public string stUnFileName { get; set; }
         public string stFileName { get; set; }
         public int inSRId { get; set; }
-        public int inCaseId { get; set; }
         [NotMapped]
         public List<Select2> DepartmentList { get; set; }
         [NotMapped]

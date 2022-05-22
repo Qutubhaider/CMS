@@ -37,6 +37,23 @@ function getIssueFileData(fsPageNo, fsSortColumn = lsSortCol, fsSortDirection = 
     $('#preloader').hide();
 }
 
+function getIssueFileData1(fsPageNo, fsSortColumn = lsSortCol, fsSortDirection = lsSortOrder) {
+    showLoading();
+    var liSize = $('#ddPageSize').val();
+
+    var loData = new Object();
+    var pg = fsPageNo;
+
+    loData.SRId = $('#inSRId').val();
+    loData.sort_column = fsSortColumn;
+    loData.sort_order = fsSortDirection;
+    loData.pg = pg;
+    loData.size = liSize;
+
+    loadMyRequest(msGetIssueDataList, "GET", loData, getIssueFileDataSuccess, getIssueFileDataError);
+    $('#preloader').hide();
+}
+
 function getIssueFileDataError(foResponse) {
     hideLoading();
 }

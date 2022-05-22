@@ -103,8 +103,7 @@ namespace FileSystemWeb.Areas.DeskOP.Controllers
                     inStoreFileDetailsId = foCaseDetail.inStoreFileDetailId,
                     stComment = foCaseDetail.stComment,
                     inStatus = (int)CommonFunctions.FileStatus.Pending,
-                    inSRId = foCaseDetail.inSRId,
-                    inCaseId = foCaseDetail.inCaseId
+                    inSRId = foCaseDetail.inSRId
                 };
 
                 string stUnFileName = string.Empty;
