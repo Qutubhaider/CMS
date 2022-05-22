@@ -12,8 +12,7 @@
         new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
         new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
         new {Id="2", Visible=true, Title="Issue Date",   Sort = false,   dbColName = "dtIssueDate",   CssClass = ""},
-         new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""},
-        new {Id="",  Visible=true, Title="Action",   Sort = false,  dbColName = "",           CssClass = ""}
+         new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""}
     };
 }
 <div class="container-fluid">
@@ -146,7 +145,7 @@
                             </select>
                             <span asp-validation-for="inDepartmentId" class="text-danger"></span>
                         </div>
-                        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Accepted)
+                        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
                         {
                             <div class="mb-3">
                                 <label class="form-label">Assign to User</label>
@@ -178,7 +177,7 @@
                 </div>
             </div>
         </div>
-         @if (Model.inStatus == (int)CommonFunctions.FileStatus.Accepted)
+         @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
         {
             <div class="col-4">
                 <div class="card">

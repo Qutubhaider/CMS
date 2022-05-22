@@ -37,6 +37,7 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
             return View("~/Areas/DeskAdmin/Views/AssignFile/AssignFileList.cshtml");
         }
 
+      
         public IActionResult GetIssueFileList(string fsFileName, int? Status, int? sort_column, string sort_order, int? pg, int? size)
         {
             try
@@ -60,7 +61,7 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
                     size = miPageSize;
 
                 List<IssueFileListResult> loIssueFileListResult = new List<IssueFileListResult>();
-                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileList(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value, null, Convert.ToInt32(User.FindFirst(SessionConstant.DepartmentId).Value.ToString()), null);
+                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileListByDeskAdmin(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value, Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
                 dynamic loModel = new ExpandoObject();
                 loModel.GetIssueFileList = loIssueFileListResult;
                 if (loIssueFileListResult.Count > 0)
@@ -77,6 +78,8 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
+      
 
         public IActionResult AssignFileDetail(Guid? id)
         {
@@ -145,6 +148,46 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
             return File(System.IO.File.ReadAllBytes(Path.Combine(moWebHostEnvironment.WebRootPath, "Files", fuFileName)), "application/octet-stream", fileName);
         }
 
+        public IActionResult GetIssueFileList1(int SRId, int? sort_column, string sort_order, int? pg, int? size)
+        {
+            try
+            {
+                string lsSearch = string.Empty;
+                int liTotalRecords = 0, liStartIndex = 0, liEndIndex = 0;
+                if (sort_column == 0 || sort_column == null)
+                    sort_column = 1;
+                if (string.IsNullOrEmpty(sort_order) || sort_order == "desc")
+                {
+                    sort_order = "desc";
+                    ViewData["sortorder"] = "asc";
+                }
+                else
+                {
+                    ViewData["sortorder"] = "desc";
+                }
+                if (pg == null || pg <= 0)
+                    pg = 1;
+                if (size == null || size.Value <= 0)
+                    size = miPageSize;
+
+                List<IssueFileListResult> loIssueFileListResult = new List<IssueFileListResult>();
+                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileListBySR(SRId, sort_column, sort_order, pg.Value, size.Value);
+                dynamic loModel = new ExpandoObject();
+                loModel.GetIssueFileList = loIssueFileListResult;
+                if (loIssueFileListResult.Count > 0)
+                {
+                    liTotalRecords = loIssueFileListResult[0].inRecordCount;
+                    liStartIndex = loIssueFileListResult[0].inRownumber;
+                    liEndIndex = loIssueFileListResult[loIssueFileListResult.Count - 1].inRownumber;
+                }
+                loModel.Pagination = PaginationService.getPagination(liTotalRecords, pg.Value, size.Value, liStartIndex, liEndIndex);
+                return PartialView("~/Areas/DeskAdmin/Views/AssignFile/_IssueFiles.cshtml", loModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+        }
 
         public IActionResult Detail(Guid id)
         {

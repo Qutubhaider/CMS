@@ -2,15 +2,14 @@
     Layout = "_LayoutDeskAdmin";
     ViewBag.Title = "My Assign File";
     var loTableHeaders = new[]
-    {
-        new {Id="1", Visible=true, Title="Assigned By",   Sort = true,   dbColName = "stUserName",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Department", Sort = true,   dbColName = "stDepartment", CssClass = ""},
-        new {Id="1", Visible=true, Title="Assigned To",   Sort = true,   dbColName = "stUserName",   CssClass = ""},
-        new {Id="2", Visible=true, Title="Department", Sort = true,   dbColName = "stDepartment", CssClass = ""},
-        new {Id="3", Visible=true, Title="Complain",  Sort = true,   dbColName = "stComment",   CssClass = ""},
-        new {Id="4", Visible=true, Title="Status",  Sort = true,   dbColName = "inStatus",   CssClass = ""},
-        new {Id="5", Visible=true, Title="Issue Date", Sort = true,   dbColName = "dtIssueDate",  CssClass = ""},
-        new {Id="",  Visible=true, Title="Action",     Sort = false,  dbColName = "",             CssClass = ""}
+   {
+        new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Complainant",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
+        new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Issue Date",   Sort = false,   dbColName = "dtIssueDate",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""},
+        new {Id="",  Visible=true, Title="Action",   Sort = false,  dbColName = "",           CssClass = ""}
     };
 }
 <div class="container-fluid">

@@ -35,6 +35,11 @@ namespace CMSBAL.Repository
         {
             return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getIssueFileListByStore @stFileName={fsFileName}, @inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder}, @inPageNo={fiPageNo},@inPageSize={fiPageSize},@inUserId={fiUserId},@inDepartmentId={fiDepartmentId},@inDivisionId={fiDivisionId}").ToList();
         }
+
+        public List<IssueFileListResult> GetIssueFileListByDeskAdmin(string fsFileName, int? fiSortColumn, string fsSortOrder, int? fiPageNo, int? fiPageSize, int? fiUserId = null, int? fiDepartmentId = null, int? fiDivisionId = null)
+        {
+            return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getIssueFileListByDeskAdmin @stFileName={fsFileName}, @inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder}, @inPageNo={fiPageNo},@inPageSize={fiPageSize},@inUserId={fiUserId},@inDepartmentId={fiDepartmentId},@inDivisionId={fiDivisionId}").ToList();
+        }
         public List<IssueFileListResult> GetIssueFileListBySR(int fiSRId,int? fiSortColumn, string fsSortOrder, int? fiPageNo, int? fiPageSize)
         {
             return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getIssueFileListBySR @inSRId={fiSRId}, @inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder}, @inPageNo={fiPageNo},@inPageSize={fiPageSize}").ToList();
