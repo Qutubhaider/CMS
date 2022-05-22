@@ -1,20 +1,40 @@
-﻿@model dynamic;
-@using CMSBAL.Complain.Models;
-@using CMSUtility.Utilities;
-@using CMSUtility.Models;
+﻿@model dynamic
+@using CMSBAL.IssueFIleHistory.Models
+@using CMSUtility.Utilities
+@using CMSUtility.Models
 
-@if (Model.GetComplainList != null && Model.GetComplainList.Count > 0)
+
+@if (Model.GetIssueFileList != null && Model.GetIssueFileList.Count > 0)
 {
-    foreach (ComplainListResultUser complain in Model.GetComplainList)
+    foreach (IssueFileListResult loIssueFileList in Model.GetIssueFileList)
     {
-        <tr>
-            <td>@complain.stAssignTo</td>
-            <td>@complain.stDepartment</td>
-            <td>@complain.stAssignedBy</td>
-            <td>@complain.stComplain</td>
-            <td>@complain.dtIssueDate</td>
-            <td class="text-center"><a asp-area="User" asp-controller="Complain" asp-action="Detail" asp-route-id="@complain.unComplainId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
-       </tr>
+        @if (!string.IsNullOrEmpty(loIssueFileList.stDepartmentAssignedBy))
+        {
+            <tr>
+                <td>@loIssueFileList.inSRId</td>
+                <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                <td>@loIssueFileList.stComment</td>
+                @{
+                    DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
+                }
+                <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
+                <td>
+                    @if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Accepted)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Pending)
+                    {
+                        <span>Pending</span>
+                    }
+                    else
+                    {
+                        <span>Close</span>
+                    }
+                </td>
+                <td class="text-center"><a asp-area="Stores" asp-controller="IssueFile" asp-action="Detail" asp-route-id="@loIssueFileList.unlssueFileId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-eye"></i> </a></td>
+            </tr>
+        }
     }
 }
 else
@@ -33,3 +53,4 @@ else
     <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
 
 }
+

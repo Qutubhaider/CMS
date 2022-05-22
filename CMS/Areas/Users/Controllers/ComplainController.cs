@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Text;
 using System.Dynamic;
 using CMSUtility.Service.PaginationService;
+using CMSBAL.IssueFIleHistory.Models;
 
 namespace CMS.Areas.Users.Controllers
 {
@@ -35,7 +36,7 @@ namespace CMS.Areas.Users.Controllers
             return View("~/Areas/Users/Views/Complain/ComplainList.cshtml");
         }
 
-        public IActionResult GetComplainList(string complain, int? Status, int? sort_column, string sort_order, int? pg, int? size)
+      /*  public IActionResult GetComplainList(string complain, int? Status, int? sort_column, string sort_order, int? pg, int? size)
         {
             StringBuilder lolog = new StringBuilder();
             try
@@ -83,7 +84,51 @@ namespace CMS.Areas.Users.Controllers
                 return RedirectToAction("Index", "Error");
             }
 
+        }*/
+
+
+        public IActionResult GetIssueFileList(string fsFileName, int? Status, int? sort_column, string sort_order, int? pg, int? size)
+        {
+            StringBuilder lolog = new StringBuilder();
+            try
+            {
+                string lsSearch = string.Empty;
+                int liTotalRecords = 0, liStartIndex = 0, liEndIndex = 0;
+                if (sort_column == 0 || sort_column == null)
+                    sort_column = 1;
+                if (string.IsNullOrEmpty(sort_order) || sort_order == "desc")
+                {
+                    sort_order = "desc";
+                    ViewData["sortorder"] = "asc";
+                }
+                else
+                {
+                    ViewData["sortorder"] = "desc";
+                }
+                if (pg == null || pg <= 0)
+                    pg = 1;
+                if (size == null || size.Value <= 0)
+                    size = miPageSize;
+
+                List<IssueFileListResult> loIssueFileListResult = new List<IssueFileListResult>();
+                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileListByUser(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value,Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
+                dynamic loModel = new ExpandoObject();
+                loModel.GetIssueFileList = loIssueFileListResult;
+                if (loIssueFileListResult.Count > 0)
+                {
+                    liTotalRecords = loIssueFileListResult[0].inRecordCount;
+                    liStartIndex = loIssueFileListResult[0].inRownumber;
+                    liEndIndex = loIssueFileListResult[loIssueFileListResult.Count - 1].inRownumber;
+                }
+                loModel.Pagination = PaginationService.getPagination(liTotalRecords, pg.Value, size.Value, liStartIndex, liEndIndex);
+                return PartialView("~/Areas/Users/Views/Complain/_ComplainList.cshtml", loModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
+
         public IActionResult AddComplain()
         {
             Complain loComplain = new Complain();

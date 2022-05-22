@@ -1,6 +1,9 @@
 ﻿using CMSBAL.Case.Models;
+using CMSBAL.FIle.Models;
 using CMSBAL.IssueFIleHistory.Models;
 using CMSBAL.Repository.IRepository;
+using CMSBAL.User.Models;
+using CMSUtility.Models;
 using CMSUtility.Service.PaginationService;
 using CMSUtility.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -57,7 +60,7 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
                     size = miPageSize;
 
                 List<IssueFileListResult> loIssueFileListResult = new List<IssueFileListResult>();
-                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileList(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value, Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
+                loIssueFileListResult = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileList(fsFileName == null ? fsFileName : fsFileName.Trim(), sort_column, sort_order, pg.Value, size.Value, null, Convert.ToInt32(User.FindFirst(SessionConstant.DepartmentId).Value.ToString()), null);
                 dynamic loModel = new ExpandoObject();
                 loModel.GetIssueFileList = loIssueFileListResult;
                 if (loIssueFileListResult.Count > 0)
@@ -140,6 +143,93 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
         public IActionResult DownloadFile(string fuFileName, string fileName)
         {
             return File(System.IO.File.ReadAllBytes(Path.Combine(moWebHostEnvironment.WebRootPath, "Files", fuFileName)), "application/octet-stream", fileName);
+        }
+
+
+        public IActionResult Detail(Guid id)
+        {
+            IssueFile loIssueFile = new IssueFile();
+            if (id != Guid.Empty)
+            {
+                loIssueFile = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileDetail(id);
+            }
+
+            loIssueFile.inDivisionId = Convert.ToInt32(User.FindFirst(SessionConstant.DivisionId).Value.ToString());
+            loIssueFile.inDepartmentId = Convert.ToInt32(User.FindFirst(SessionConstant.DepartmentId).Value.ToString());
+            loIssueFile.RoomList = moUnitOfWork.RoomRepository.GetRoomDropDown(Convert.ToInt32(User.FindFirst(SessionConstant.StoreId).Value.ToString()));
+            loIssueFile.DepartmentList = moUnitOfWork.DepartmentRepository.GetDepartmentDropDown();
+            loIssueFile.UserList = moUnitOfWork.UserRepository.GetUserListForIssueFile(Convert.ToInt32(User.FindFirst(SessionConstant.StoreId).Value.ToString()), Convert.ToInt32(User.FindFirst(SessionConstant.DivisionId).Value.ToString()));
+            loIssueFile.FileList = moUnitOfWork.FileRepository.GetFileDropDown();
+            return View("~/Areas/DeskAdmin/Views/AssignFile/AssignFileDetail.cshtml", loIssueFile);
+        }
+
+       
+        public IActionResult SaveIssueFile(IssueFile foIssueFileDetail)
+        {
+            try
+            {
+                int liSuccess = 0;
+                int liUserId = Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString());
+                if (foIssueFileDetail != null)
+                {
+
+                    moUnitOfWork.IssueFileHistoryRepository.SaveIssueFileByStore(foIssueFileDetail, liUserId, out liSuccess);
+                    if (liSuccess == (int)CommonFunctions.ActionResponse.Add)
+                    {
+                        TempData["ResultCode"] = CommonFunctions.ActionResponse.Add;
+                        TempData["Message"] = string.Format(AlertMessage.RecordAdded, "Issue File");
+                        return RedirectToAction("Index");
+                    }
+                    else if (liSuccess == (int)CommonFunctions.ActionResponse.Update)
+                    {
+                        TempData["ResultCode"] = CommonFunctions.ActionResponse.Update;
+                        TempData["Message"] = string.Format(AlertMessage.RecordUpdated, "Issue File");
+                        return RedirectToAction("Index");
+
+                    }
+                    else
+                    {
+                        TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
+                        TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving issue file");
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
+                TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving issue file");
+                return RedirectToAction("Index");
+            }
+        }
+
+        /*public IActionResult DownloadFile(string fuFileName, string fileName)
+        {
+            return File(System.IO.File.ReadAllBytes(Path.Combine(moWebHostEnvironment.WebRootPath, "Files", fuFileName)), "application/octet-stream", fileName);
+        }*/
+
+        public IActionResult GetUserDetailFromDropDown(int userId)
+        {
+            UserDropDownDetailResult user = moUnitOfWork.UserRepository.GetUserDetailFromDropDown(userId);
+
+            return Json(new { data = user });
+        }
+
+        public IActionResult GetFileDetailFromDropDown(int fileId)
+        {
+            StoreFileDetailDropDownResult file = moUnitOfWork.FileRepository.GetFileDetailDropDown(fileId);
+
+            return Json(new { data = file });
+        }
+
+        public IActionResult GetUserDropdown(int DepartmentId)
+        {
+            List<Select2> UserDropDown = moUnitOfWork.UserRepository.GetUserListByDepartmentId(DepartmentId);
+            return Json(new { data = UserDropDown });
+
         }
     }
 }

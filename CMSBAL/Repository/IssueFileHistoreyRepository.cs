@@ -35,7 +35,12 @@ namespace CMSBAL.Repository
         {
             return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getIssueFileListByStore @stFileName={fsFileName}, @inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder}, @inPageNo={fiPageNo},@inPageSize={fiPageSize},@inUserId={fiUserId},@inDepartmentId={fiDepartmentId},@inDivisionId={fiDivisionId}").ToList();
         }
-        
+
+        public List<IssueFileListResult> GetIssueFileListByUser(string fsFileName, int? fiSortColumn, string fsSortOrder, int? fiPageNo, int? fiPageSize, int? fiUserId = null, int? fiDepartmentId = null, int? fiDivisionId = null)
+        {
+            return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getIssueFileListByUser @stFileName={fsFileName}, @inSortColumn={fiSortColumn},@stSortOrder={fsSortOrder}, @inPageNo={fiPageNo},@inPageSize={fiPageSize},@inUserId={fiUserId},@inDepartmentId={fiDepartmentId},@inDivisionId={fiDivisionId}").ToList();
+        }
+
         public List<IssueFileListResult> GetFileHistoryList(int fiSRId)
         {
             return moDatabaseContext.Set<IssueFileListResult>().FromSqlInterpolated($"EXEC getFileHistory @inSRId={fiSRId}").ToList();
@@ -50,7 +55,7 @@ namespace CMSBAL.Repository
         public void SaveIssueFileByStore(IssueFile foIssueFile, int fiUserId, out int fiSuccess)
         {
             SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveIssueFileByStore @inIssueFileId={foIssueFile.inlssueFileId},@inStoreFileId={foIssueFile.inStoreFileDetailsId} ,@inDivisionId={foIssueFile.inDivisionId},@inDepartmentId={foIssueFile.inDepartmentId},@inUserId={foIssueFile.inAssignUserId},@stComment={foIssueFile.stComment},@inStatus={foIssueFile.inStatus},@inCreatedBy={fiUserId},@inSuccess={loSuccess} OUT");
+            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveIssueFileByStore @inIssueFileId={foIssueFile.inlssueFileId}, @inSRId={foIssueFile.inSRId} ,@inStoreFileId={foIssueFile.inStoreFileDetailsId} ,@inDivisionId={foIssueFile.inDivisionId},@inDepartmentId={foIssueFile.inDepartmentId},@inUserId={foIssueFile.inAssignUserId},@stComment={foIssueFile.stComment},@inStatus={foIssueFile.inStatus},@inCreatedBy={fiUserId},@inSuccess={loSuccess} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
 

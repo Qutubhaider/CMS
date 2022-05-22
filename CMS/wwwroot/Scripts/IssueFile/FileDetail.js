@@ -32,7 +32,7 @@ function GetUserDetailError() { }
 
 function GetFileDetail() {
     var loData = new Object();
-    loData.fileId = $('#ddFileName').val();
+    loData.fileId = $('#StoreId').val();
     loadMyRequest(msGetFileDetail, "GET", loData, GetFileDetailSuccess, GetFileDetailError)
 
 }
@@ -44,10 +44,6 @@ function GetFileDetailSuccess(fresponse) {
     $('#txtEmployeeNumber').val(fresponse.data.stEmployeeNumber);
     $('#txtPFNumber').val(fresponse.data.stPFNumber);
     $('#txtMobile').val(fresponse.data.stMobile);
-    $('#txtPPONumber').val(fresponse.data.stPPONumber);
-    $('#txtStoreName').val(fresponse.data.stStoreName);
-    $('#txtRoomNumber').val(fresponse.data.stRoomNumber);
-    $('#txtAlmirahNumber').val(fresponse.data.stAlmirahNumber);
-    $('#txtShelveNumber').val(fresponse.data.stShelveNumber);
+    $('#txtPPONumber').val(fresponse.data.stPPONumber);  
 }
 function GetFileDetailError() { }

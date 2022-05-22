@@ -58,8 +58,9 @@ namespace CMSUtility.Utilities
         }
         public enum FileStatus
         {
-            Accepted = 1,
-            Pending = 0
+            Accepted = 2,
+            Pending = 1,
+            Close= 3
         }
 
         public enum CaseStatus
