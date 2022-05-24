@@ -16,7 +16,9 @@ function GetUserDetailSuccess(fresponse) {
     $('#txtFirstName').val(fresponse.data.stFirstName);
     $('#txtLastName').val(fresponse.data.stLastName);
     $('#txtEmail').val(fresponse.data.stEmail);
-    $('#txtMobile').val(fresponse.data.stMobile);
+    $('#txtMobileA').val(fresponse.data.stMobile);
+    $('#txtDepartmentA').val(fresponse.data.stDepartmentName);
+    
     if (fresponse.data.inRole == Role.DeskOP) {
         $('#txtUserType').val('Desk Operator');
     }

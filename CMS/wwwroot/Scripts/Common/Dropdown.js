@@ -17,7 +17,7 @@
         $("#ddDesk").append("<option value='" + "" + "'>" + "Select Desk" + "</option>");
     }
     loadMyRequest(msGetDivisionDropDown, "GET", loData, function (response) {
-        $("#ddDivision").append("<option value='" + "" + "'>" + "Select Division" + "</option>");
+        //$("#ddDivision").append("<option value='" + "" + "'>" + "Select Division" + "</option>");
         response.data.forEach(d => $("#ddDivision").append("<option value='" + d.id + "'>" + d.value + "</option>"));
         if (flgIsEdit)
             $("#ddDivision").val($("#inDivisionId").val());

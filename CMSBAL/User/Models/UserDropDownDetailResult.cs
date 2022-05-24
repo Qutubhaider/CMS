@@ -15,6 +15,7 @@ namespace CMSBAL.User.Models
         public string stEmail           {get;set;}
         public string stMobile          {get;set;}
         public string stAddress { get; set; }
+        public string stDepartmentName { get; set; }
         public int inRole { get; set; }
     }
 }

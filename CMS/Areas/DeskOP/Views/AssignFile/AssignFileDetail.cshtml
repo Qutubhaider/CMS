@@ -1,119 +1,92 @@
-﻿@model CMSBAL.IssueFIleHistory.Models.GetAssignFileDetailResult
+﻿@model CMSBAL.IssueFIleHistory.Models.IssueFile
+@using CMSUtility.Utilities
 @{
     Layout = "_LayoutDeskOP";
     ViewBag.Title = "Assign File Detail";
-
+    var loTableHeaders = new[]
+          {
+       new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
+        new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
+        new {Id="1", Visible=true, Title="From",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
+        new {Id="2", Visible=true, Title="To",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
+        new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Issue Date",   Sort = false,   dbColName = "dtIssueDate",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""}
+    };
 }
 <div class="container-fluid">
     <!-- start page title -->
     <div class="row">
         <div class="col-8">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Assigned File Details</h4>
+                <h4 class="mb-sm-0">Complain Detail</h4>
             </div>
         </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="DeskOP" asp-controller="IssueFile" asp-action="Index">Back</a>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div></div></div><div class="row">
+
+                            <div class="col-sm-12" id="IssueFileList">
+
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            @{
+                                                int lsSortIndex = 0;
+                                                string lsSortOrder = "";
+                                                @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
+                                                {
+                                                    <th class="@loHeader.CssClass" id="@loHeader.Id">
+                                                        @if (loHeader.Sort)
+                                                        {
+                                                            string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
+                                                            string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
+                                                            <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
+                                                        }
+                                                        else
+                                                            @loHeader.Title
+
+                                                        </th>
+                                                }
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mx-0 pagination_wrap">
+                            <div class="dataTables_paginate paging_full_numbers clearfix text-center">
+                                <div class="pagination" id="paginationList">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+
     <div class="row">
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
-                        <h4>Assigned File Detail</h4>
-                    </div>
-                    <form class="custom-validation" asp-action="AcceptAssignFile" asp-controller="AssignFile" asp-area="DeskOP" novalidate="">
-                        <div class="mb-3">
-                            <label class="form-label">SR Id</label>
-                            <input asp-for="inSRId" type="text" class="form-control" readonly>
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">File Name</label>
-                            <input asp-for="stFileName" type="text" class="form-control" placeholder="Division Name" readonly>
-                            <a asp-action="downloadfile" asp-controller="IssueFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
-
-                        </div>
-                        @*<div class="mb-3">
-            <label class="form-label">User Name</label>
-            <input asp-for="stUserName" type="text" class="form-control" placeholder="Division Name" readonly>
-
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Department Name</label>
-            <input asp-for="stDepartmentName" type="text" class="form-control" placeholder="Division Name" readonly>
-
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Division Name</label>
-            <input asp-for="stDivisionName" type="text" class="form-control" placeholder="Division Name" readonly>
-
-        </div>*@
-                        <div class="mb-3">
-                            <label class="form-label">Comment</label>
-                            <textarea asp-for="stComment" class="form-control" placeholder="Division Name" readonly></textarea>
-
-                        </div>
-                        <div>
-                            <div>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
-                                    Accept
-                                </button>
-                                <button type="reset" class="btn btn-secondary waves-effect">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        <input hidden asp-for="inAssignUserId" />
-                        <input hidden asp-for="inlssueFileId" />
-                        <input hidden asp-for="inStoreFileDetailsId" />
-                        <input hidden asp-for="inUserProfileId" />
-                        <input hidden asp-for="inCreatedBy" />
-
-                    </form>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>Assigned By</h4>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input id="txtFirstName" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <input id="txtLastName" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input id="txtEmail" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mobile</label>
-                        <input id="txtMobile" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">User Type</label>
-                        <input id="txtUserType" type="text" class="form-control" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>File Detail</h4>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">File Name</label>
-                        <input id="txtFileName" type="text" class="form-control" readonly>
+                        <h4>Complainant Detail</h4>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Employee Name</label>
@@ -128,32 +101,159 @@
                         <input id="txtPFNumber" type="text" class="form-control" readonly>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Mobile</label>
-                        <input id="txtMobile" type="text" class="form-control" readonly>
+                        <label class="form-label">PPO Number</label>
+                        <input type="text" id="txtPPONumber" class="form-control" readonly />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">PPO Number</label>
-                        <textarea id="txtPPONumber" class="form-control" readonly></textarea>
+                        <label class="form-label">Mobile</label>
+                        <input id="txtMobile" type="text" class="form-control" readonly>
                     </div>
                 </div>
             </div>
         </div>
-    </div> <!-- end col -->
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>Complain Detail</h4>
+                    </div>
+                    <form asp-action="SaveIssueFile" asp-controller="AssignFile" asp-area="DeskOP" class="custom-validation" novalidate="">
+                        <input type="hidden" value="@Model.inStoreFileDetailsId" id="StoreId" />
+                        <input hidden value="@Model.inStoreFileDetailsId" asp-for="inStoreFileDetailsId" />
+                        <input hidden value="@Model.inSRId" asp-for="inSRId" />
+                        <div class="mb-3">
+                            <label class="form-label" style="display:none;">Employee Name || Employee No || PPO No || PF No</label>
+
+
+                        </div>
+                        <div class="mb-3">
+                            <i class="fa fa-download"></i>
+                            <a asp-action="downloadfile" asp-controller="AssignFile" asp-area="Admin" asp-route-fuFileName="@Model.stUnFileName" asp-route-fileName="@Model.stFileName">Download File</a>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">File Name</label>
+                            <input id="txtFileName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea asp-for="stComment" class="form-control"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <select disabled id="ddDepartmentId" asp-for="inDepartmentId" onchange="getUserList($('#ddDepartmentId').val());" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department</option>
+                            </select>
+                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                        </div>
+                        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Assign to User</label>
+                                <select onchange="GetUserDetail($('#inAssignUserId').val());" asp-for="inAssignUserId" id="ddUser" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+                                    <option value="">Select User</option>
+                                </select>
+                            </div>
+
+
+                            //<div class="mb-3">
+                            //    <label class="form-label">Comment</label>
+                            //    <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
+                            //</div>
+                            <div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                        Submit
+                                    </button>
+                                    <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        <input type="hidden" asp-for="inlssueFileId">
+                        <input type="hidden" asp-for="inDepartmentId">
+                        <input type="hidden" asp-for="inDivisionId">
+                    </form>
+                </div>
+            </div>
+        </div>
+        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+        {
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Assigned To</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input id="txtFirstName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <input id="txtDepartmentA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input id="txtEmail" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input id="txtMobileA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <input id="txtUserType" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
 </div>
-
+</div>
 @section Scripts {
-    <partial name="_ValidationScriptsPartial.cshtml" />
-
-    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
-    <script src="~/Scripts/File/FileDetail.js" asp-append-version="true"></script>
-
-    <script type="text/javascript">
+<partial name="_ValidationScriptsPartial.cshtml" />
+<script type="text/javascript">
     var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
-    var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+        var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+        var msUserList = '@Url.Action("GetUserDropdown")';
 
+
+         $(document).ready(function () {
+            getUserList($('#ddDepartmentId').val());
+            console.log($('#ddDepartmentId').val());
+            GetFileDetail();
+         });
+
+        function getUserList(id) {
+            console.log(id);
+            var loData = new Object();
+            loData.DepartmentId = id;
+            if ($("#ddUser").length > 0) {
+                $("#ddUser").empty();
+                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+            }
+            loadMyRequest(msUserList, "GET", loData, function (response) {
+                $("#ddUser").empty();
+                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+                response.data.forEach(d => $("#ddUser").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+
+            }, function () { });
+        }
+</script>
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script src="~/Scripts/IssueFile/FileDetail.js" asp-append-version="true"></script>
+
+<script type="text/javascript">
+    var msGetIssueDataList = '@Url.Action("GetIssueFileList1")';
         $(document).ready(function () {
-            GetUserDetail(@Model.inCreatedBy);
-            GetFileDetail(@Model.inStoreFileDetailsId);
-        });
-    </script>
+            getIssueFileData1();
+         });
+</script>
+<script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
+
 }

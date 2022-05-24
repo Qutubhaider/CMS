@@ -1,7 +1,4 @@
-﻿
-
-
-@model dynamic
+﻿@model dynamic
 @using CMSBAL.IssueFIleHistory.Models
 @using CMSUtility.Utilities
 @using CMSUtility.Models
@@ -9,35 +6,39 @@
 
 @if (Model.GetIssueFileList != null && Model.GetIssueFileList.Count > 0)
 {
+    int ctr = 0;
     foreach (IssueFileListResult loIssueFileList in Model.GetIssueFileList)
     {
+        ctr++;
         <tr>
+            <td>@ctr</td>
             <td>@loIssueFileList.inSRId</td>
-
-             @if (string.IsNullOrEmpty(@loIssueFileList.stFirstNameAssignTo))
-            {
-                <td>You</td>
-                <td>@User.FindFirst(CommonConstant.SessionConstant.DepartmentName).Value.ToString()</td>
-            }
-            else
+            @if (ctr == 1)
             {
                 <td>@loIssueFileList.stFirstNameAssignTo</td>
                 <td>@loIssueFileList.stDepartmentAssignedTo</td>
-            }
-
-            @if (string.IsNullOrEmpty(@loIssueFileList.stFirstNameAssignedBy))
-            {
-                <td>You</td>
+                <td><span style="color:black; font-weight:bold;">You</span></td>
                 <td>@User.FindFirst(CommonConstant.SessionConstant.DepartmentName).Value.ToString()</td>
             }
             else
             {
-                <td>@loIssueFileList.stFirstNameAssignedBy</td>
-                <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                if (ctr == 2)
+                {
+                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignTo</span></td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                    <td>@loIssueFileList.stFirstNameAssignedBy</td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                }
+                else
+                {
+                     <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                    <td>@loIssueFileList.stFirstNameAssignedBy</td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                }
             }
 
 
-           
 
             <td>@loIssueFileList.stComment</td>
             @{

@@ -4,30 +4,46 @@
 @using CMSUtility.Models
 
 
-
 @if (Model.GetIssueFileList != null && Model.GetIssueFileList.Count > 0)
 {
     foreach (IssueFileListResult loIssueFileList in Model.GetIssueFileList)
     {
-        <tr>
-            <td>@loIssueFileList.inSRId</td>
-            <td>@loIssueFileList.stFirstNameAssignedBy</td>
-            <td>@loIssueFileList.stDepartmentAssignedBy</td>  
-            <td>@loIssueFileList.stComment</td>
-            <td>@Enum.GetName(typeof(CommonFunctions.FileStatus), loIssueFileList.inStatus)</td>
-            @{
-                DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
-            }
-            <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
-            @if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Accepted)
-            {
-                <td></td>
-            }
-            else
-            {
-                <td class="text-center"><a asp-area="DeskOP" asp-controller="AssignFile" asp-action="Detail" asp-route-id="@loIssueFileList.unlssueFileId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-eye"></i></a></td>
-            }
-        </tr>
+        @if (!string.IsNullOrEmpty(loIssueFileList.stFirstNameAssignTo))
+        {
+            <tr>
+
+                <td>@loIssueFileList.inSRId</td>
+
+
+                @if (string.IsNullOrEmpty(@loIssueFileList.stFirstNameAssignTo))
+                {
+                    <td>You</td>
+                    <td>@User.FindFirst(CommonConstant.SessionConstant.DepartmentName).Value.ToString()</td>
+                }
+                else
+                {
+                    <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                }
+
+                <td>@loIssueFileList.stComment</td>
+                @{
+                    DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
+                }
+                <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
+                <td>
+                    @if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Accepted)
+                    {
+                        <span>Forwarded</span>
+                    }
+                    else if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Pending)
+                    {
+                        <span>Pending</span>
+                    }
+                </td>
+                <td class="text-center"><a asp-area="DeskOP" asp-controller="AssignFile" asp-action="Detail" asp-route-id="@loIssueFileList.unlssueFileId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-eye"></i> </a></td>
+            </tr>
+        }
     }
 }
 else
@@ -46,4 +62,3 @@ else
     <input type="hidden" id="hdnNoOfRecordsMessage" value="@loPagination.stNoOfRecordsMessage" />
 
 }
-

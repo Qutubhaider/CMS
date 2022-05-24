@@ -5,7 +5,8 @@
     ViewBag.Title = "Complain Detail";
      var loTableHeaders = new[]
    {
-        new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
+       new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
+        new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
         new {Id="1", Visible=true, Title="From",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
          new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
         new {Id="2", Visible=true, Title="To",   Sort = false,   dbColName = "stUserName",   CssClass = ""},
@@ -134,8 +135,8 @@
                             <input id="txtFileName" type="text" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Complain</label>
-                            <textarea asp-for="stComment" class="form-control" readonly></textarea>
+                            <label class="form-label">Comment</label>
+                            <textarea asp-for="stComment" class="form-control"></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -155,10 +156,10 @@
                             </div>
 
 
-                            <div class="mb-3">
-                                <label class="form-label">Comment</label>
-                                <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
-                            </div>
+                            //<div class="mb-3">
+                            //    <label class="form-label">Comment</label>
+                            //    <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
+                            //</div>
                             <div>
                                 <div>
                                     <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
