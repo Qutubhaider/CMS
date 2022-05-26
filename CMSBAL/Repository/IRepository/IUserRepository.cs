@@ -21,5 +21,7 @@ namespace CMSBAL.Repository.IRepository
         List<Select2> GetUserListByDepartmentId(int fiDepartmentId);
         UserDropDownDetailResult GetUserDetailFromDropDown(int fiUserId);
         void SaveUser(UserRegisterVM fouser,out int success);
+        MyProfile GetUserProfile(Guid unUserId);
+        void SaveUserProfile(MyProfile foUser, out int fiSuccess);
     }
 }

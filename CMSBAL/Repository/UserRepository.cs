@@ -83,5 +83,17 @@ namespace CMSBAL.Repository
             moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveUserDetails @inDeskid={foUser.inDeskid},@inZoneId={foUser.inZoneId},@inStoreId={foUser.inStoreId},@inDivisionId ={foUser.inDivisionId},@inDepartmentId  ={foUser.inDepartmentId},@inDesignationId ={foUser.inDesignationId},@stFirstName={foUser.stFirstName},@stLastName ={foUser.stLastName},@stEmail={foUser.stEmail},@stMobile={foUser.stMobile},@stAddress ={foUser.stAddress},@inEmployeeType={foUser.inEmployeeType},@stPFNumber ={foUser.stPFNumber},@stEmployeeNumber={foUser.stEmployeeNumber},@stPPONumber ={foUser.stPPONumber},@inStatus={1}, @inSuccess={loSuccess} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
+
+        public MyProfile GetUserProfile(Guid unUserId)
+        {
+            return moDatabaseContext.Set<MyProfile>().FromSqlInterpolated($"EXEC getUserProfileDetail @unUserId={unUserId}").AsEnumerable().FirstOrDefault();
+        }
+
+        public void SaveUserProfile(MyProfile foUser, out int fiSuccess)
+        {
+            SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveUserProfileDetail @unUserProfileId={foUser.unUserProfileId}, @inZoneId={foUser.inZoneId},@inDivisionId ={foUser.inDivisionId},@inDepartmentId  ={foUser.inDepartmentId},@inDesignationId ={foUser.inDesignationId},@stFirstName={foUser.stFirstName},@stLastName ={foUser.stLastName},@stEmail={foUser.stEmail},@stMobile={foUser.stMobile},@stAddress ={foUser.stAddress}, @inSuccess={loSuccess} OUT");
+            fiSuccess = Convert.ToInt32(loSuccess.Value);
+        }
     }
 }

@@ -61,6 +61,7 @@ namespace CMSBAL.Data
         public DbSet<CategoryListResult> CategoryListResult { get; set; }
         public DbSet<Category.Models.Category> Category { get; set; }
         public DbSet<Complain.Models.Complain> Complain { get; set; }
+        public DbSet<MyProfile> MyProfile { get; set; }
 
         protected override void OnModelCreating(ModelBuilder foModelbuilder)
         {
@@ -99,6 +100,7 @@ namespace CMSBAL.Data
             foModelbuilder.Entity<CategoryListResult>().HasNoKey();
             foModelbuilder.Entity<Category.Models.Category>().HasNoKey();
             foModelbuilder.Entity<Complain.Models.Complain>().HasNoKey();
+            foModelbuilder.Entity<MyProfile>().HasNoKey();
             base.OnModelCreating(foModelbuilder);
         }
     }

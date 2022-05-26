@@ -1,0 +1,96 @@
+﻿@model CMSBAL.User.Models.MyProfile
+@{
+    Layout = "_LayoutSignup";
+}
+<h4 class="font-size-18 text-muted mt-2 text-center">My Profile</h4>
+<p class="mb-5 text-center">User Detail</p>
+
+<form class="form-horizontal" asp-action="SaveMyUserProfile" asp-controller="Home" novalidate="" method="post">
+    <div class="mb-3">
+        <label class="form-label">Zone Name</label>
+        <select id="ddZone" onchange="OnZoneChange();" asp-for="inZoneId" class="form-control" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.ZoneList,"id","value"))">
+            <option value="">Select Zone Name</option>
+        </select>
+        <span asp-validation-for="inZoneId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Division Name</label>
+        <select id="ddDivision" onchange="OnDivisionChangeLoadDesk();OnDivisionChangeLoadStore();" asp-for="inDivisionId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Department Name</label>
+        <select id="ddDepartment" onchange="OnDepartmentChange();" asp-for="inDepartmentId" class="form-control" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+            <option value="">Select Department Name</option>
+        </select>
+        <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Designation Name</label>
+        <select id="ddDesignation" asp-for="inDesignationId" class="form-control" data-placeholder="Choose ...">
+            <option value="">Select Designation Name</option>
+        </select>
+        <span asp-validation-for="inDesignationId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input asp-for="stFirstName" type="text" class="form-control" placeholder="First Name">
+        <span asp-validation-for="stFirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input asp-for="stLastName" type="text" class="form-control" placeholder="Last Name">
+        <span asp-validation-for="stLastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input asp-for="stEmail" type="text" class="form-control" placeholder="Email">
+        <span asp-validation-for="stEmail" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mobile</label>
+        <input asp-for="stMobile" type="text" class="form-control" placeholder="Mobile">
+        <span asp-validation-for="stMobile" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input asp-for="stAddress" type="text" class="form-control" placeholder="Address">
+        <span asp-validation-for="stAddress" class="text-danger"></span>
+    </div>
+    
+
+    <div>
+        <div>
+            <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                Submit
+            </button>
+            <button type="reset" class="btn btn-secondary waves-effect">
+                Cancel
+            </button>
+        </div>
+    </div>
+    <input type="hidden" asp-for="inZoneId" />
+    <input type="hidden" asp-for="inDivisionId" />
+    <input type="hidden" asp-for="inDepartmentId" />
+    <input type="hidden" asp-for="inDesignationId" />
+    <input type="hidden" asp-for="unUserProfileId" />
+    <input type="hidden" asp-for="inUserProfileId" />
+    <input type="hidden" asp-for="inUserId" />
+</form>
+@section Scripts {
+<partial name="_ValidationScriptsPartial.cshtml" />
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script type="text/javascript">
+    var msGetDivisionDropDown = '@Url.Action("GetDivisionDropdown")';
+    var msGetDeskDropDown =  '@Url.Action("GetDeskDropdown")';
+    var msGetDesignationDropDown = '@Url.Action("GetDesignationDropDown")';
+    var msGetStoreDropDown = '@Url.Action("GetStoreDropdown")';
+        $(document).ready(function () {
+            OnZoneChange(true);
+            OnDivisionChangeLoadDesk(true);
+            OnDivisionChangeLoadStore(true);
+            OnDepartmentChange(true);
+    });
+</script>
+<script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
+}

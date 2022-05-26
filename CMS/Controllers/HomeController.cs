@@ -59,6 +59,39 @@ namespace FileSystemWeb.Controllers
             return View("~/Views/Home/SignUp.cshtml", loUserProfile);
         }
 
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult MyProfile()
+        {
+            MyProfile loUserProfile = new MyProfile();
+            loUserProfile = moUnitOfWork.UserRepository.GetUserProfile(Guid.Parse(User.FindFirst(SessionConstant.unUserId).Value.ToString()));
+            loUserProfile.ZoneList = moUnitOfWork.ZoneRepository.GetZoneDropDown();
+            loUserProfile.DepartmentList = moUnitOfWork.DepartmentRepository.GetDepartmentDropDown();
+            return View("~/Views/Home/MyProfile.cshtml", loUserProfile);
+        }
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]
+        public IActionResult SaveMyUserProfile(MyProfile foUser)
+        {
+            try
+            {
+                moUnitOfWork.UserRepository.SaveUserProfile(foUser, out int success);
+                if (success == (int)CommonFunctions.ActionResponse.Add)
+                {
+                    TempData["ResultCode"] = CommonFunctions.ActionResponse.Add;
+                    TempData["Message"] = string.Format(AlertMessage.RecordAdded, "user");
+                    return RedirectToAction("Login");
+                }
+                TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
+                TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving user");
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+
+        }
+
         [HttpPost]
         public IActionResult SaveUser(UserRegisterVM foUser)
         {
