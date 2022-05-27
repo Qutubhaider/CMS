@@ -46,7 +46,7 @@ namespace FileSystemWeb.Areas.Stores.Controllers
             {
                 loIssueFile = moUnitOfWork.IssueFileHistoryRepository.GetIssueFileDetail(id);
             }
-            
+            loIssueFile.stComment = "";
             loIssueFile.inDivisionId = Convert.ToInt32(User.FindFirst(SessionConstant.DivisionId).Value.ToString());
             loIssueFile.inDepartmentId = Convert.ToInt32(User.FindFirst(SessionConstant.DepartmentId).Value.ToString());
             loIssueFile.RoomList = moUnitOfWork.RoomRepository.GetRoomDropDown(Convert.ToInt32(User.FindFirst(SessionConstant.StoreId).Value.ToString()));
@@ -202,7 +202,7 @@ namespace FileSystemWeb.Areas.Stores.Controllers
 
         public IActionResult GetUserDropdown(int DepartmentId)
         {
-            List<Select2> UserDropDown = moUnitOfWork.UserRepository.GetUserListByDepartmentId(DepartmentId);
+            List<Select2> UserDropDown = moUnitOfWork.UserRepository.GetUserListByDepartmentId(DepartmentId, Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
             return Json(new { data = UserDropDown });
 
         }

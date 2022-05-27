@@ -270,7 +270,7 @@ namespace FileSystemWeb.Areas.DeskAdmin.Controllers
 
         public IActionResult GetUserDropdown(int DepartmentId)
         {
-            List<Select2> UserDropDown = moUnitOfWork.UserRepository.GetUserListByDepartmentId(DepartmentId);
+            List<Select2> UserDropDown = moUnitOfWork.UserRepository.GetUserListByDepartmentId(DepartmentId, Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
             return Json(new { data = UserDropDown });
 
         }

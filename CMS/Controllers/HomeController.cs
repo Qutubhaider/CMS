@@ -53,7 +53,7 @@ namespace FileSystemWeb.Controllers
 
         public IActionResult SignUp()
         {
-            UserRegisterVM loUserProfile = new UserRegisterVM();          
+            UserRegisterVM loUserProfile = new UserRegisterVM();
             loUserProfile.ZoneList = moUnitOfWork.ZoneRepository.GetZoneDropDown();
             loUserProfile.DepartmentList = moUnitOfWork.DepartmentRepository.GetDepartmentDropDown();
             return View("~/Views/Home/SignUp.cshtml", loUserProfile);
@@ -74,15 +74,27 @@ namespace FileSystemWeb.Controllers
         {
             try
             {
-                moUnitOfWork.UserRepository.SaveUserProfile(foUser, out int success);
-                if (success == (int)CommonFunctions.ActionResponse.Add)
+                moUnitOfWork.UserRepository.SaveUserProfile(foUser, out int success, out int role);
+                if (success == (int)CommonFunctions.ActionResponse.Update)
                 {
                     TempData["ResultCode"] = CommonFunctions.ActionResponse.Add;
-                    TempData["Message"] = string.Format(AlertMessage.RecordAdded, "user");
-                    return RedirectToAction("Login");
+                    TempData["Message"] = string.Format(AlertMessage.RecordAdded, "Profile details");
+
+                    if (role == (int)UserType.Admin)
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    else if (role == (int)UserType.DivisionAdmin)
+                        return RedirectToAction("Index", "Dashboard", new { area = "Divisions" });
+                    else if (role == (int)UserType.DepartmentAdmin)
+                        return RedirectToAction("Index", "Dashboard", new { area = "Departments" });
+                    else if (role == (int)UserType.StoreOP)
+                        return RedirectToAction("Index", "Dashboard", new { area = "Stores" });
+                    else if (role == (int)UserType.DeskAdmin)
+                        return RedirectToAction("Index", "Dashboard", new { area = "DeskAdmin" });
+                    else if (role == (int)UserType.SignUpUser)
+                        return RedirectToAction("Index", "Dashboard", new { area = "Users" });
+                    else
+                        return RedirectToAction("Index", "Dashboard", new { area = "DeskOP" });
                 }
-                TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
-                TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving user");
                 return RedirectToAction("Login");
             }
             catch (Exception ex)
@@ -98,21 +110,21 @@ namespace FileSystemWeb.Controllers
             try
             {
                 moUnitOfWork.UserRepository.SaveUser(foUser, out int success);
-                if(success==(int)CommonFunctions.ActionResponse.Add)
+                if (success == (int)CommonFunctions.ActionResponse.Add)
                 {
                     TempData["ResultCode"] = CommonFunctions.ActionResponse.Add;
-                    TempData["Message"] = string.Format(AlertMessage.RecordAdded,"user");
+                    TempData["Message"] = string.Format(AlertMessage.RecordAdded, "user");
                     return RedirectToAction("Login");
                 }
                 TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
-                TempData["Message"] = string.Format(AlertMessage.OperationalError,"saving user");
+                TempData["Message"] = string.Format(AlertMessage.OperationalError, "saving user");
                 return RedirectToAction("Login");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest();
             }
-            
+
         }
 
         public IActionResult GetDesignationDropDown(int fiDepartmentId)
