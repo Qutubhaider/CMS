@@ -67,9 +67,9 @@ namespace CMSBAL.Repository
 
         }
 
-        public List<Select2> GetUserListByDepartmentId(int fiDepartmentId)
+        public List<Select2> GetUserListByDepartmentId(int fiDepartmentId, int fiUserId)
         {
-            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getUserListDepartmentId @inDepartmentId={fiDepartmentId}").ToList();
+            return moDatabaseContext.Set<Select2>().FromSqlInterpolated($"EXEC getUserListDepartmentId @inDepartmentId={fiDepartmentId}, @inUserId={fiUserId}").ToList();
         }
 
         public UserDropDownDetailResult GetUserDetailFromDropDown(int fiUserId)
@@ -89,11 +89,13 @@ namespace CMSBAL.Repository
             return moDatabaseContext.Set<MyProfile>().FromSqlInterpolated($"EXEC getUserProfileDetail @unUserId={unUserId}").AsEnumerable().FirstOrDefault();
         }
 
-        public void SaveUserProfile(MyProfile foUser, out int fiSuccess)
+        public void SaveUserProfile(MyProfile foUser, out int fiSuccess, out int fiRole)
         {
             SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveUserProfileDetail @unUserProfileId={foUser.unUserProfileId}, @inZoneId={foUser.inZoneId},@inDivisionId ={foUser.inDivisionId},@inDepartmentId  ={foUser.inDepartmentId},@inDesignationId ={foUser.inDesignationId},@stFirstName={foUser.stFirstName},@stLastName ={foUser.stLastName},@stEmail={foUser.stEmail},@stMobile={foUser.stMobile},@stAddress ={foUser.stAddress}, @inSuccess={loSuccess} OUT");
+            SqlParameter loRole = new SqlParameter("@inRole", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveUserProfileDetail @unUserProfileId={foUser.unUserProfileId}, @inZoneId={foUser.inZoneId},@inDivisionId ={foUser.inDivisionId},@inDepartmentId  ={foUser.inDepartmentId},@inDesignationId ={foUser.inDesignationId},@stFirstName={foUser.stFirstName},@stLastName ={foUser.stLastName},@stEmail={foUser.stEmail},@stMobile={foUser.stMobile},@stAddress ={foUser.stAddress}, @inSuccess={loSuccess} OUT, @inRole={loRole} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
+            fiRole = Convert.ToInt32(loRole.Value);
         }
         public void UpdateNewPassword(int inUserId,string newPassword, out int fiSuccess)
         {
@@ -101,5 +103,7 @@ namespace CMSBAL.Repository
             moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC updatePassword @inUserId={inUserId},@stNewPassword={newPassword}, @inSuccess={loSuccess} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
+
+       
     }
 }

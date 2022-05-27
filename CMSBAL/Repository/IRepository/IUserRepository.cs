@@ -18,11 +18,11 @@ namespace CMSBAL.Repository.IRepository
         List<Select2> GetUserDropDown();
         List<Select2> GetUserListForIssueFile(int fiStoreId,int inDivisionId);
         List<Select2> GetUserListByDivisionId(int fiDivisionId);
-        List<Select2> GetUserListByDepartmentId(int fiDepartmentId);
+        List<Select2> GetUserListByDepartmentId(int fiDepartmentId,int fiUserId);
         UserDropDownDetailResult GetUserDetailFromDropDown(int fiUserId);
         void SaveUser(UserRegisterVM fouser,out int success);
         MyProfile GetUserProfile(Guid unUserId);
-        void SaveUserProfile(MyProfile foUser, out int fiSuccess);
+        void SaveUserProfile(MyProfile foUser, out int fiSuccess, out int fiRole);
         void UpdateNewPassword(int inUserId, string newPassword, out int fiSuccess);
     }
 }
