@@ -23,6 +23,7 @@ namespace CMSUtility.Utilities
         public const string UserNotFound = "User does not exist.";
         public const string UserDeleted = "User deleted.";
         public const string UserInactive = "User inactive.";
+        public const string PasswordUpdate = "Password is updated successfully.";
         #endregion
     }
 }

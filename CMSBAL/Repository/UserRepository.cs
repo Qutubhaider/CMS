@@ -95,5 +95,11 @@ namespace CMSBAL.Repository
             moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC saveUserProfileDetail @unUserProfileId={foUser.unUserProfileId}, @inZoneId={foUser.inZoneId},@inDivisionId ={foUser.inDivisionId},@inDepartmentId  ={foUser.inDepartmentId},@inDesignationId ={foUser.inDesignationId},@stFirstName={foUser.stFirstName},@stLastName ={foUser.stLastName},@stEmail={foUser.stEmail},@stMobile={foUser.stMobile},@stAddress ={foUser.stAddress}, @inSuccess={loSuccess} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
+        public void UpdateNewPassword(int inUserId,string newPassword, out int fiSuccess)
+        {
+            SqlParameter loSuccess = new SqlParameter("@inSuccess", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC updatePassword @inUserId={inUserId},@stNewPassword={newPassword}, @inSuccess={loSuccess} OUT");
+            fiSuccess = Convert.ToInt32(loSuccess.Value);
+        }
     }
 }

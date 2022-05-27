@@ -229,5 +229,41 @@ namespace FileSystemWeb.Controllers
             }
             return RedirectToAction("Login");
         }
+
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        public IActionResult ChangePassword()
+        {
+            ChangePasswordVM passVM = new ChangePasswordVM();
+            return View("~/Views/Home/ChangePassword.cshtml", passVM);
+        }
+
+        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [HttpPost]
+        public IActionResult UpdatePassword(ChangePasswordVM foPassword)
+        {
+            UserEmailResult UserDetail = moUnitOfWork.UserRepository.GetUserByEmail(User.FindFirst(SessionConstant.stEmail).Value.ToString());
+            if (foPassword.stOldPassword == UserDetail.stPassword)
+            {
+                moUnitOfWork.UserRepository.UpdateNewPassword(UserDetail.inUserId, foPassword.stNewPassword, out int fiSuccess);
+                if(fiSuccess==102)
+                {
+                    TempData["ResultCode"] = CommonFunctions.ActionResponse.Update;
+                    TempData["Message"] = string.Format(AlertMessage.PasswordUpdate);
+                    return RedirectToAction("Login", "Home");
+                }
+                
+                
+                    TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
+                    TempData["Message"] = string.Format(AlertMessage.OperationalError,"updating password");
+                    return RedirectToAction("MyProfile", "Home");
+                
+            }
+            else
+            {
+                TempData["ResultCode"] = CommonFunctions.ActionResponse.Error;
+                TempData["Message"] = string.Format(AlertMessage.CredentialMisMatch);
+                return RedirectToAction("ChangePassword", "Home");
+            }
+        }
     }
 }

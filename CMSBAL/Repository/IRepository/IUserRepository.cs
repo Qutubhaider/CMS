@@ -23,5 +23,6 @@ namespace CMSBAL.Repository.IRepository
         void SaveUser(UserRegisterVM fouser,out int success);
         MyProfile GetUserProfile(Guid unUserId);
         void SaveUserProfile(MyProfile foUser, out int fiSuccess);
+        void UpdateNewPassword(int inUserId, string newPassword, out int fiSuccess);
     }
 }
