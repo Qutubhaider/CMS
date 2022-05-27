@@ -103,5 +103,7 @@ namespace CMSBAL.Repository
             moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC updatePassword @inUserId={inUserId},@stNewPassword={newPassword}, @inSuccess={loSuccess} OUT");
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
+
+       
     }
 }
