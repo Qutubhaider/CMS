@@ -3,8 +3,8 @@
 @{
     Layout = "_LayoutDeskAdmin";
     ViewBag.Title = "Complain Detail";
-     var loTableHeaders = new[]
-   {
+    var loTableHeaders = new[]
+                                          {
        new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
         new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
           new {Id="1", Visible=true, Title="Category",   Sort = false,   dbColName = "stCategory",   CssClass = ""},
@@ -58,7 +58,12 @@
                                                         }
                                                         else
                                                             @loHeader.Title
-                                                    </th>
+
+
+
+
+
+                                                        </th>
                                                 }
                                             }
                                         </tr>
@@ -81,9 +86,9 @@
             </div>
         </div>
     </div> <!-- end col -->
-    
-        <div class="row">
-            <div class="col-4">
+
+    <div class="row">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -124,8 +129,6 @@
                         <input hidden value="@Model.inSRId" asp-for="inSRId" />
                         <div class="mb-3">
                             <label class="form-label" style="display:none;">Employee Name || Employee No || PPO No || PF No</label>
-
-
                         </div>
                         <div class="mb-3">
                             <i class="fa fa-download"></i>
@@ -136,11 +139,6 @@
                             <label class="form-label">File Name</label>
                             <input id="txtFileName" type="text" class="form-control" readonly>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Comment</label>
-                            <textarea asp-for="stComment" class="form-control"></textarea>
-                        </div>
-
                         <div class="mb-3">
                             <label class="form-label">Department</label>
                             <select disabled id="ddDepartmentId" asp-for="inDepartmentId" onchange="getUserList($('#ddDepartmentId').val());" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
@@ -157,21 +155,6 @@
                                 </select>
                             </div>
 
-
-                            //<div class="mb-3">
-                            //    <label class="form-label">Comment</label>
-                            //    <textarea asp-for="stComment" id="txtComment" class="form-control"></textarea>
-                            //</div>
-                            <div>
-                                <div>
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
-                                        Submit
-                                    </button>
-                                    <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
-                                        Cancel
-                                    </a>
-                                </div>
-                            </div>
                         }
                         <input type="hidden" asp-for="inlssueFileId">
                         <input type="hidden" asp-for="inDepartmentId">
@@ -180,41 +163,65 @@
                 </div>
             </div>
         </div>
-         @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
         {
             <div class="col-4">
                 <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>Assigned To</h4>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Assigned To</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input id="txtFirstName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <input id="txtDepartmentA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input id="txtEmail" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input id="txtMobileA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <input id="txtUserType" type="text" class="form-control" readonly>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input id="txtFirstName" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <input id="txtDepartmentA" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input id="txtEmail" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mobile</label>
-                        <input id="txtMobileA" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">User Type</label>
-                        <input id="txtUserType" type="text" class="form-control" readonly>
+                </div>
+            </div>
+        }
+    </div>
+    @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+    {
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea rows="12" asp-for="stComment" class="form-control"></textarea>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        }
-        </div>
-       
-    </div>
+    }
 </div>
 @section Scripts {
 <partial name="_ValidationScriptsPartial.cshtml" />
@@ -254,8 +261,8 @@
         $(document).ready(function () {
             getIssueFileData1();
          });
-    </script>
-    <script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
+</script>
+<script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
 
 }
 
