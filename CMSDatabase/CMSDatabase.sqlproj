@@ -123,7 +123,6 @@
     <Build Include="dbo\StoredProcedures\getStoreList.sql" />
     <Build Include="dbo\StoredProcedures\getStoreUserCount.sql" />
     <Build Include="dbo\StoredProcedures\getTraceFile.sql" />
-    <Build Include="dbo\StoredProcedures\getTraceFile_1.sql" />
     <Build Include="dbo\StoredProcedures\getUserByEmail.sql" />
     <Build Include="dbo\StoredProcedures\getUserDataByDropDown.sql" />
     <Build Include="dbo\StoredProcedures\getUserDetail.sql" />
@@ -151,5 +150,13 @@
     <Build Include="dbo\StoredProcedures\saveUserDetails.sql" />
     <Build Include="dbo\StoredProcedures\saveUserProfile.sql" />
     <Build Include="dbo\StoredProcedures\saveZone.sql" />
+    <Build Include="dbo\StoredProcedures\getCategoryList.sql" />
+    <Build Include="dbo\StoredProcedures\saveCategory.sql" />
+    <Build Include="dbo\StoredProcedures\getIssueFileListByUser.sql" />
+    <Build Include="dbo\StoredProcedures\getIssueFileListBySR.sql" />
+    <Build Include="dbo\StoredProcedures\getIssueFileListByDeskAdmin.sql" />
+    <Build Include="dbo\StoredProcedures\getCategory.sql" />
+    <Build Include="dbo\StoredProcedures\getSubCategoryDropDown.sql" />
+    <Build Include="dbo\StoredProcedures\saveComplain.sql" />
   </ItemGroup>
 </Project>

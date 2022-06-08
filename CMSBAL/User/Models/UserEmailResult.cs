@@ -16,12 +16,12 @@ namespace CMSBAL.User.Models
         public string stEmail { get; set; }
         public string stMobile { get; set; }
         public int inStatus { get; set; }
-        public int inZoneId { get; set; }
-        public int inDesignationId { get; set; }
-        public int inDeskId { get; set; }
-        public int inDivisionId { get; set; }
-        public int inStoreId { get; set; }
-        public int inDepartmentId { get; set; }
+        public int? inZoneId { get; set; }
+        public int? inDesignationId { get; set; }
+        public int? inDeskId { get; set; }
+        public int? inDivisionId { get; set; }
+        public int? inStoreId { get; set; }
+        public int? inDepartmentId { get; set; }
         public string stDepartmentName { get; set; }
         public string stFirstName { get; set; }
         public string stZoneName { get; set; }

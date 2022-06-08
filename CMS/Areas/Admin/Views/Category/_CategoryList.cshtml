@@ -8,9 +8,9 @@
     foreach (CategoryListResult loCategoryListResult in Model.GetCategoryList)
     {
         <tr>
-            <td>@loCategoryListResult.stCategoryName</td>
-            <td>@(loCategoryListResult.stParentCategoryName==null?"Self":loCategoryListResult.stParentCategoryName)</td>
             <td>@loCategoryListResult.stDepartmentName</td>
+            <td>@loCategoryListResult.stCategoryName </td>
+            <td>@(loCategoryListResult.stParentCategoryName==null?"Self":loCategoryListResult.stParentCategoryName)</td>
             <td class="text-center"><a asp-area="Admin" asp-controller="Category" asp-action="Detail" asp-route-id="@loCategoryListResult.unCategoryId" class="btn btn-outline-secondary btn-sm edit"><i class="fas fa-pencil-alt"></i> </a></td>
        </tr>
     }

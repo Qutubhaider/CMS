@@ -48,13 +48,14 @@ function OnDivisionChangeLoadDesk(flgIsEdit = false) {
     }, function () { });
 }
 
-function OnDivisionChangeLoadStore(flgIsEdit = false) {
+function OnDivisionChangeLoadStore(flgIsEdit = false) {    
     var loData = new Object();
+    var liDivisionId;
     if (flgIsEdit) {
-        var liDivisionId = $('#inDivisionId').val();
+         liDivisionId = $('#inDivisionId').val();
     }
     else {
-        var liDivisionId = $('#ddDivision').val();
+         liDivisionId = $('#ddDivision').val();
     }
 
     loData.fiDivisionId = liDivisionId;
@@ -63,7 +64,6 @@ function OnDivisionChangeLoadStore(flgIsEdit = false) {
         $("#ddStore").append("<option value='" + "" + "'>" + "Select Store" + "</option>");
     }
     loadMyRequest(msGetStoreDropDown, "GET", loData, function (response) {
-        //console.log(response);
         $("#ddStore").empty();
         $("#ddStore").append("<option value='" + "" + "'>" + "Select Store" + "</option>");
         response.data.forEach(d => $("#ddStore").append("<option value='" + d.id + "'>" + d.value + "</option>"));
@@ -194,11 +194,12 @@ function OnSChange(flgIsEdit = false) {
 
 function OnDepartmentChangeLoadCategory(flgIsEdit = false) {
     var loData = new Object();
+    var liDepartmentId;
     if (flgIsEdit) {
-        var liDepartmentId = $('#inDepartmentId').val();
+        liDepartmentId = $('#inDepartmentId').val();
     }
     else {
-        var liDepartmentId = $('#ddDepartment').val();
+        liDepartmentId = $('#ddDepartment').val();
     }
 
     loData.fiDepartmentId = liDepartmentId;

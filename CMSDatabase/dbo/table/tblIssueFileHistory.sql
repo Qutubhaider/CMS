@@ -14,5 +14,7 @@
     flgIsDeleted BIT DEFAULT(0),
     dtCreateDate DATETIME NOT NULL,
     inCreatedBy INT NOT NULL, 
-    [inSRId] INT NOT NULL
+    [inSRId] INT NOT NULL, 
+    [inCategoryId] INT NULL, 
+    [inSubCategoryId] INT NULL
 )
