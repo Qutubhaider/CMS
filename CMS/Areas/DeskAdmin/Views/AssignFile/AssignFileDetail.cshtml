@@ -4,7 +4,7 @@
     Layout = "_LayoutDeskAdmin";
     ViewBag.Title = "Complain Detail";
     var loTableHeaders = new[]
-                                          {
+                                                  {
        new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
         new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
           new {Id="1", Visible=true, Title="Category",   Sort = false,   dbColName = "stCategory",   CssClass = ""},
@@ -18,112 +18,114 @@
          new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""}
     };
 }
-<div class="container-fluid">
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-8">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Complain Detail</h4>
+<form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Stores" class="custom-validation" novalidate="">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-8">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Complain Detail</h4>
+                </div>
+            </div>
+            <div class="col-4" style="float:right;">
+                <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Back</a>
             </div>
         </div>
-        <div class="col-4" style="float:right;">
-            <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Back</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
 
-                    <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div></div></div><div class="row">
+                            <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div></div></div><div class="row">
 
-                            <div class="col-sm-12" id="IssueFileList">
+                                <div class="col-sm-12" id="IssueFileList">
 
-                                <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
-                                    <thead>
-                                        <tr role="row">
-                                            @{
-                                                int lsSortIndex = 0;
-                                                string lsSortOrder = "";
-                                                @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
-                                                {
-                                                    <th class="@loHeader.CssClass" id="@loHeader.Id">
-                                                        @if (loHeader.Sort)
-                                                        {
-                                                            string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
-                                                            string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
-                                                            <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
-                                                        }
-                                                        else
-                                                            @loHeader.Title
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable_info">
+                                        <thead>
+                                            <tr role="row">
+                                                @{
+                                                    int lsSortIndex = 0;
+                                                    string lsSortOrder = "";
+                                                    @foreach (var loHeader in loTableHeaders.Where(x => x.Visible == true))
+                                                    {
+                                                        <th class="@loHeader.CssClass" id="@loHeader.Id">
+                                                            @if (loHeader.Sort)
+                                                            {
+                                                                string lsSrtOrder = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "desc" : "asc") : "asc";
+                                                                string lsSortingClass = loHeader.Id.Equals(lsSortIndex) ? (lsSortOrder.Equals("asc") ? "sorting" : "sorting_desc") : "";
+                                                                <a onclick="sort('@loHeader.Id',this);" href="Javascript:void(0);">@loHeader.Title</a>
+                                                            }
+                                                            else
+                                                                @loHeader.Title
 
 
 
 
 
-                                                        </th>
+
+                                                            </th>
+                                                    }
                                                 }
-                                            }
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mx-0 pagination_wrap">
-                            <div class="dataTables_paginate paging_full_numbers clearfix text-center">
-                                <div class="pagination" id="paginationList">
+                            <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mx-0 pagination_wrap">
+                                <div class="dataTables_paginate paging_full_numbers clearfix text-center">
+                                    <div class="pagination" id="paginationList">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
-    </div> <!-- end col -->
+        </div> <!-- end col -->
 
-    <div class="row">
-        <div class="col-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>Complainant Detail</h4>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Employee Name</label>
-                        <input id="txtEmpoloyeeName" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Employee Number</label>
-                        <input id="txtEmployeeNumber" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">PF Number</label>
-                        <input id="txtPFNumber" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">PPO Number</label>
-                        <input type="text" id="txtPPONumber" class="form-control" readonly />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mobile</label>
-                        <input id="txtMobile" type="text" class="form-control" readonly>
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Complainant Detail</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Name</label>
+                            <input id="txtEmpoloyeeName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Employee Number</label>
+                            <input id="txtEmployeeNumber" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PF Number</label>
+                            <input id="txtPFNumber" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PPO Number</label>
+                            <input type="text" id="txtPPONumber" class="form-control" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input id="txtMobile" type="text" class="form-control" readonly>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>Complain Detail</h4>
-                    </div>
-                    <form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Stores" class="custom-validation" novalidate="">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Complain Detail</h4>
+                        </div>
+
                         <input type="hidden" value="@Model.inStoreFileDetailsId" id="StoreId" />
                         <input hidden value="@Model.inStoreFileDetailsId" asp-for="inStoreFileDetailsId" />
                         <input hidden value="@Model.inSRId" asp-for="inSRId" />
@@ -159,70 +161,71 @@
                         <input type="hidden" asp-for="inlssueFileId">
                         <input type="hidden" asp-for="inDepartmentId">
                         <input type="hidden" asp-for="inDivisionId">
-                    </form>
+
+                    </div>
                 </div>
             </div>
+            @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+            {
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h4>Assigned To</h4>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input id="txtFirstName" type="text" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Department</label>
+                                <input id="txtDepartmentA" type="text" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input id="txtEmail" type="text" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mobile</label>
+                                <input id="txtMobileA" type="text" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User Type</label>
+                                <input id="txtUserType" type="text" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
         @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
         {
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center">
-                            <h4>Assigned To</h4>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input id="txtFirstName" type="text" class="form-control" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Department</label>
-                            <input id="txtDepartmentA" type="text" class="form-control" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input id="txtEmail" type="text" class="form-control" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Mobile</label>
-                            <input id="txtMobileA" type="text" class="form-control" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">User Type</label>
-                            <input id="txtUserType" type="text" class="form-control" readonly>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Comment</label>
+                                <textarea rows="12" asp-for="stComment" class="form-control"></textarea>
+                            </div>
+                            <div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                        Submit
+                                    </button>
+                                    <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
     </div>
-    @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
-    {
-
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Comment</label>
-                            <textarea rows="12" asp-for="stComment" class="form-control"></textarea>
-                        </div>
-                        <div>
-                            <div>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
-                                    Submit
-                                </button>
-                                <a class="btn btn-secondary waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
-                                    Cancel
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+</form>
 @section Scripts {
 <partial name="_ValidationScriptsPartial.cshtml" />
 <script type="text/javascript">

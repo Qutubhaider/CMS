@@ -13,37 +13,54 @@
         <tr>
             <td>@ctr</td>
             <td>@loIssueFileList.inSRId</td>
-              <td>@loIssueFileList.stCategoryName</td>
-                  <td>@loIssueFileList.stSubCategoryName</td>
+            <td>@loIssueFileList.stCategoryName</td>
+            <td>@loIssueFileList.stSubCategoryName</td>
             @if (ctr == 1)
-            {
-                <td>@loIssueFileList.stFirstNameAssignTo</td>
-                <td>@loIssueFileList.stDepartmentAssignedTo</td>
-                <td>Reception</td>
-                <td>@User.FindFirst(CommonConstant.SessionConstant.DepartmentName).Value.ToString()</td>
-            }
-            else
-            {
-                if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignedBy)
+            {                
+                if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignTo)
                 {
-                    <td>@loIssueFileList.stFirstNameAssignTo</td>
-                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
-                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignedBy</span></td>
-                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
-                }
-                else if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignTo)
-                {
-                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignTo</span></td>
-                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
                     <td>@loIssueFileList.stFirstNameAssignedBy</td>
                     <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignTo</span></td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                }
+                else if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignedBy)
+                {
+                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignedBy</span></td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
                 }
                 else
                 {
-                    <td>@loIssueFileList.stFirstNameAssignTo</td>
-                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
                     <td>@loIssueFileList.stFirstNameAssignedBy</td>
                     <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                }
+            }
+            else
+            {
+                if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignTo)
+                {
+                    <td>@loIssueFileList.stFirstNameAssignedBy</td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignTo</span></td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                }
+                else if (User.FindFirst(CommonConstant.SessionConstant.Name).Value.ToString() == @loIssueFileList.stFirstNameAssignedBy)
+                {
+                    <td><span style="color:black; font-weight:bold;">@loIssueFileList.stFirstNameAssignedBy</span></td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
+                }
+                else
+                {
+                    <td>@loIssueFileList.stFirstNameAssignedBy</td>
+                    <td>@loIssueFileList.stDepartmentAssignedBy</td>
+                    <td>@loIssueFileList.stFirstNameAssignTo</td>
+                    <td>@loIssueFileList.stDepartmentAssignedTo</td>
                 }
             }
 
