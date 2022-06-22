@@ -8,13 +8,13 @@ function sort(fsSortColumn, element) {
         $(element).closest('th').removeClass("sorting_asc").addClass("sorting_desc");
         lsSortOrder = 'desc';
         lsSortCol = fsSortColumn;
-        getDepartmentData(lsPageNo, fsSortColumn, "desc");
+        getDesignationData(lsPageNo, fsSortColumn, "desc");
     }
     else {
         $(element).closest('th').removeClass("sorting_desc").addClass("sorting_asc");
         lsSortOrder = 'asc';
         lsSortCol = fsSortColumn;
-        getDepartmentData(lsPageNo, fsSortColumn, "asc");
+        getDesignationData(lsPageNo, fsSortColumn, "asc");
     }
 }
 

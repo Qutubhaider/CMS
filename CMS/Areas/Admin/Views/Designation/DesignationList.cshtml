@@ -2,9 +2,9 @@
     Layout = "_LayoutAdmin";
     ViewBag.Title = "Manage Designation";
     var loTableHeaders = new[]
-   {
-        new {Id="2", Visible=true, Title="Department",   Sort = true,   dbColName = "stDepartmentName",   CssClass = "w150 sorting"},
-        new {Id="1", Visible=true, Title="Designation",   Sort = true,   dbColName = "stDesignationName",   CssClass = "w150 sorting"},
+           {
+        new {Id="1", Visible=true, Title="Department",   Sort = true,   dbColName = "stDepartmentName",   CssClass = "w150 sorting"},
+        new {Id="2", Visible=true, Title="Designation",   Sort = true,   dbColName = "stDesignationName",   CssClass = "w150 sorting"},
         new {Id="",  Visible=true, Title="Action",   Sort = false,  dbColName = "",           CssClass = "w40 text-center"}
     };
 }
@@ -27,7 +27,11 @@
 
                     <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div></div></div><div class="row">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select id="ddPageSize" onchange="getDesignationData();" name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6">
+                                @*<div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label></div>*@
+                            </div>
+                        </div><div class="row">
 
                             <div class="col-sm-12" id="DesignationList">
 
@@ -48,7 +52,8 @@
                                                         }
                                                         else
                                                             @loHeader.Title
-                                                    </th>
+
+                                                        </th>
                                                 }
                                             }
                                         </tr>
@@ -75,12 +80,12 @@
 
 <input id="hdnPageNoListPanel" type="hidden" value="1" />
 @section Scripts {
-    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
-    <script type="text/javascript">
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script type="text/javascript">
     var msGetDesignationDataList = '@Url.Action("GetDesignationList")';
     $(document).ready(function () {
         getDesignationData();
     });
-    </script>
-    <script src="~/Scripts/Designation/DesignationList.js" asp-append-version="true"></script>
+</script>
+<script src="~/Scripts/Designation/DesignationList.js" asp-append-version="true"></script>
 } 

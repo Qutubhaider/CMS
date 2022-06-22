@@ -1,10 +1,9 @@
-﻿
-@using CMSBAL.Category.Models
+﻿@using CMSBAL.Category.Models
 @{
     Layout = "_LayoutAdmin";
     ViewBag.Title = "Manage Category";
     var loTableHeaders = new[]
-                    {
+                            {
         new {Id="3", Visible=true, Title="Department",   Sort = true,   dbColName = "stDepartmentName",   CssClass = "w150 sorting"},
         new {Id="1", Visible=true, Title="Category Name",   Sort = true,   dbColName = "stCategoryName",   CssClass = "w150 sorting"},
         new {Id="2", Visible=true, Title="Parent Category Name",   Sort = true,   dbColName = "stParenntCategoryName",   CssClass = "w150 sorting"},
@@ -30,8 +29,16 @@
 
                     <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
 
-                        <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select id="ddPageSize" onchange="getCategoryData();" name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>                 </label></div></div><div class="col-sm-12 col-md-6"><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" id="txtCategoryTitle" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label><button id="btnSearch" type="button" onclick="getCategoryData(true);">Search
-</button></div></div></div><div class="row">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6"><div class="dataTables_length" id="datatable_length"><label>Show <select id="ddPageSize" onchange="getCategoryData();" name="datatable_length" aria-controls="datatable" class="custom-select custom-select-sm form-control form-control-sm form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>                 </label></div></div><div class="col-sm-12 col-md-6">
+                                <div id="datatable_filter" class="dataTables_filter">
+                                    <label><input type="search" id="txtCategoryTitle" class="form-control form-control-sm" placeholder="" aria-controls="datatable"></label>
+                                    <button style="margin:12px" class="btn btn-info" id="btnSearch" type="button" onclick="getCategoryData(true);">
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div><div class="row">
 
                             <div class="col-sm-12" id="CategoryList">
 
@@ -53,13 +60,13 @@
                                                         else
                                                             @loHeader.Title
 
-                                                    </th>
+
+                                                        </th>
                                                 }
                                             }
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -81,15 +88,15 @@
 
 <input id="hdnPageNoListPanel" type="hidden" value="1" />
 @section Scripts {
-    <script type="text/javascript">
-   var msGetCategoryDataList = '@Url.Action("GetCategoryList")';
-    $(document).ready(function () {
-        getCategoryData();
-    });
-    </script>
+<script type="text/javascript">
+    var msGetCategoryDataList = '@Url.Action("GetCategoryList")';
+     $(document).ready(function () {
+         getCategoryData();
+     });
+</script>
 
-    <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
-        <script src="~/Scripts/Category/CategoryList.js" asp-append-version="true"></script>
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script src="~/Scripts/Category/CategoryList.js" asp-append-version="true"></script>
 }
 
 
