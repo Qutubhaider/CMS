@@ -12,6 +12,7 @@ CREATE PROC [dbo].[getIssueFileListByUser]
 	@stSortOrder NVARCHAR(51) = NULL, 
 	@inPageNo INT = 1, 
 	@inPageSize INT = 10 ,
+	@inCreatedBy INT = NULL,
 	@inUserId INT = NULL,
 	@inDepartmentId INT = NULL,
 	@inDivisionId INT = NULL
@@ -30,7 +31,7 @@ SET NOCOUNT ON;
  
 	IF @inSortColumn = 1 
 	BEGIN 
-		SET @stSort = 'inlssueFileId'; 
+		SET @stSort = 'stFileName'; 
 	END  
 	SET @stSQL=''+'WITH PAGED AS(  
 		SELECT CAST(ROW_NUMBER() OVER(ORDER BY '+ @stSort + ' ' + ISNULL(@stSortOrder,'ASC') + ' ) AS INT) AS inRownumber,		
@@ -66,8 +67,15 @@ SET NOCOUNT ON;
 		SET @stSQL = @stSQL + '  AND (F.stFileName LIKE ''%' + CONVERT(NVARCHAR(211), @stFileName)  + '%'')' 
  
  +'' 
+
+ IF(ISNULL(@inCreatedBy,0)>0)               
+		SET @stSQL = @stSQL +' AND IFH.inCreatedBy= '+ CONVERT(NVARCHAR(11), @inCreatedBy) +''
+
  IF(ISNULL(@inUserId,0)>0)               
-		SET @stSQL = @stSQL +' AND IFH.inCreatedBy= '+ CONVERT(NVARCHAR(11), @inUserId) +''
+		SET @stSQL = @stSQL +' AND IFH.inUserId= '+ CONVERT(NVARCHAR(11), @inUserId) +''
+
+
+
 	SET @stSQL = @stSQL +' 
 				)A )   
 				SELECT (SELECT CAST(COUNT(*) AS INT) FROM PAGED) AS inRecordCount,*   
@@ -79,3 +87,8 @@ SET NOCOUNT ON;
 	PRINT(@stSQL) 
 	EXEC (@stSQL) 
 END 
+
+
+
+
+

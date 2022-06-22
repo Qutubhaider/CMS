@@ -30,6 +30,7 @@ AS
   DECLARE @stEmployeeNumber NVARCHAR(200)
   DECLARE @stPPONumber NVARCHAR(200)
   DECLARE @stMobile NVARCHAR(200)
+  DECLARE @inAssignUserId INT
   SET @inSuccess=0
 		 BEGIN 	
 		 
@@ -51,14 +52,15 @@ AS
 			   INSERT INTO tblServiceRequest(inStoreFileDetailsId,dtSRdate,inCreatedBy) VALUES (@inStoreFileDetailId,@currentDateTime,@inUserId)
 
 			   SET @inServiceRequestId=SCOPE_IDENTITY()
+			   
+			   SELECT @inAssignUserId = UP.inUserId FROM tblUserProfile UP
+			   JOIN tblUser U ON U.inUserId=UP.inUserId
+			   WHERE U.inRole=6 AND UP.inDepartmentId=@inDepartmentId
 
 			   INSERT INTO tblIssueFileHistory(inStoreFileDetailsId,inAssignUserId,inDivisionId,inDepartmentId,dtIssueDate,stComment,inStatus,
-												dtCreateDate,inCreatedBy,inSRId,inCategoryId,inSubCategoryId)  
-			   SELECT  @inStoreFileDetailId,@inUserId,@inDivisionId,@inDepartmentId,@currentDateTime,@stComplainText,1,@currentDateTime, 
-												@inUserId , @inServiceRequestId, @inCategoryId, @inSubCategoryId 
+												dtCreateDate,inCreatedBy,inSRId,inCategoryId,inSubCategoryId,inUserId)  
+			   SELECT  @inStoreFileDetailId,@inAssignUserId,@inDivisionId,@inDepartmentId,@currentDateTime,@stComplainText,1,@currentDateTime, 
+												@inUserId , @inServiceRequestId, @inCategoryId, @inSubCategoryId, @inUserId 
 			   SET @inSuccess=101  
 		 END
  END
-
-
- 

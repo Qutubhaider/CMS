@@ -16,5 +16,6 @@
     inCreatedBy INT NOT NULL, 
     [inSRId] INT NOT NULL, 
     [inCategoryId] INT NULL, 
-    [inSubCategoryId] INT NULL
+    [inSubCategoryId] INT NULL, 
+    [inUserId] INT NULL
 )
