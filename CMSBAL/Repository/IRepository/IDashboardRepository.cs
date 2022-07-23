@@ -8,9 +8,6 @@ namespace CMSBAL.Repository.IRepository
 {
     public interface IDashboardRepository
     {
-        public void getStoreUserCount(int inUserId, int inRoleId, out int inStoreUserCount);
-        public void getDeskOperatorCount(int inUserId, int inRoleId, out int inDeskOperatorCount);
-        public void getPendingAcceptFileCount(int inUserId, int inRoleId, out int inPendingAcceptFileCount);
-        public void getPendingCaseCount(int inUserId, int inRoleId, out int inPendingCaseCount);
+        public List<Dashboard.Models.DashboardResult> GetDepartmentDashboard(int fiDepartmentId);
     }
 }

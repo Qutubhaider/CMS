@@ -159,5 +159,6 @@
     <Build Include="dbo\StoredProcedures\getSubCategoryDropDown.sql" />
     <Build Include="dbo\StoredProcedures\saveComplain.sql" />
     <Build Include="dbo\StoredProcedures\getCategoryDetail.sql" />
+    <Build Include="dbo\StoredProcedures\getDepartmentDashboard.sql" />
   </ItemGroup>
 </Project>

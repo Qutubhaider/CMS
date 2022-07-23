@@ -19,32 +19,10 @@ namespace CMSBAL.Repository
         {
             moDatabaseContext = foDatabaseContext;
         }
-        public void getDeskOperatorCount(int inUserId, int inRoleId, out int inDeskOperatorCount)
-        {
-            SqlParameter loDeskOPCount = new SqlParameter("@inDeskOpCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC getDeskOperatorCount @inUserId={inUserId},@inRoleId={inRoleId}, @inDeskOpCount={loDeskOPCount} OUT");
-            inDeskOperatorCount = Convert.ToInt32(loDeskOPCount.Value);
-        }
 
-        public void getPendingAcceptFileCount(int inUserId, int inRoleId, out int inPendingAcceptFileCount)
+        public List<Dashboard.Models.DashboardResult> GetDepartmentDashboard(int fiDepartmentId)
         {
-            SqlParameter loFileCount = new SqlParameter("@inPendingAcceptFileCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC getPendingAcceptFileCount @inUserId={inUserId},@inRoleId={inRoleId}, @inPendingAcceptFileCount={loFileCount} OUT");
-            inPendingAcceptFileCount = Convert.ToInt32(loFileCount.Value);
-        }
-
-        public void getPendingCaseCount(int inUserId, int inRoleId, out int inPendingCaseCount)
-        {
-            SqlParameter loCaseCount = new SqlParameter("@inPendingCaseCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC getPendingCaseCount @inUserId={inUserId},@inRoleId={inRoleId}, @inPendingCaseCount={loCaseCount} OUT");
-            inPendingCaseCount = Convert.ToInt32(loCaseCount.Value);
-        }
-
-        public void getStoreUserCount(int inUserId, int inRoleId, out int inStoreUserCount)
-        {
-            SqlParameter loStoreUserCount = new SqlParameter("@inStoreUserCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
-            moDatabaseContext.Database.ExecuteSqlInterpolated($"EXEC getStoreUserCount @inUserId={inUserId},@inRoleId={inRoleId}, @inStoreUserCount={loStoreUserCount} OUT");
-            inStoreUserCount = Convert.ToInt32(loStoreUserCount.Value);
+            return moDatabaseContext.Set<Dashboard.Models.DashboardResult>().FromSqlInterpolated($"EXEC getDepartmentDashboard @inDepartmentId={fiDepartmentId}").ToList();
         }
     }
 }

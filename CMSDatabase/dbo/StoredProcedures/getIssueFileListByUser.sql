@@ -36,7 +36,7 @@ SET NOCOUNT ON;
 	SET @stSQL=''+'WITH PAGED AS(  
 		SELECT CAST(ROW_NUMBER() OVER(ORDER BY '+ @stSort + ' ' + ISNULL(@stSortOrder,'ASC') + ' ) AS INT) AS inRownumber,		
 		inSRId,inlssueFileId,unlssueFileId,dtIssueDate,stComment,inStatus,stFileName,stDivisionName,
-		stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo,stCategoryName,stSubCategoryName
+		stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo,stCategoryName,stSubCategoryName,AGEING
 		FROM ( 
             SELECT  IFH.inSRId,
                     IFH.inlssueFileId, 
@@ -51,7 +51,8 @@ SET NOCOUNT ON;
 					(UPF.stFirstName) AS stFirstNameAssignTo,
 					(DPS.stDepartmentName) stDepartmentAssignedTo,
 					CM.stCategoryName,
-					(CMS.stCategoryName) AS stSubCategoryName
+					(CMS.stCategoryName) AS stSubCategoryName,
+					DATEDIFF(day,dtIssueDate,getdate() ) AS AGEING
             FROM tblIssueFileHistory IFH WITH(NOLOCK)
             JOIN tblDivision DV ON DV.inDivisionId=IFH.inDivisionId
 			LEFT JOIN tblUserProfile UPS ON UPS.inUserId=IFH.inAssignUserId
@@ -87,8 +88,3 @@ SET NOCOUNT ON;
 	PRINT(@stSQL) 
 	EXEC (@stSQL) 
 END 
-
-
-
-
-

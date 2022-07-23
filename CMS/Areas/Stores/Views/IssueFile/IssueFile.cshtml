@@ -3,8 +3,8 @@
 @{
     Layout = "_LayoutStores";
     ViewBag.Title = "Complain Detail";
-     var loTableHeaders = new[]
-   {
+    var loTableHeaders = new[]
+          {
         new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
         new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
            new {Id="1", Visible=true, Title="Category",   Sort = false,   dbColName = "stCategory",   CssClass = ""},
@@ -15,6 +15,8 @@
         new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
         new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
         new {Id="2", Visible=true, Title="Issue Date",   Sort = false,   dbColName = "dtIssueDate",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Total Days",   Sort = false,   dbColName = "Total Days",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Ageing",   Sort = false,   dbColName = "Total Age",   CssClass = ""},
          new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""}
     };
 }
@@ -58,7 +60,8 @@
                                                         }
                                                         else
                                                             @loHeader.Title
-                                                    </th>
+
+                                                        </th>
                                                 }
                                             }
                                         </tr>
@@ -81,9 +84,9 @@
             </div>
         </div>
     </div> <!-- end col -->
-    
-        <div class="row">
-            <div class="col-4">
+
+    <div class="row">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
@@ -173,6 +176,12 @@
                                 </div>
                             </div>
                         }
+                        else
+                        {
+                            <a class="btn btn-danger waves-effect" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">
+                                Close Complain
+                            </a>
+                        }
                         <input type="hidden" asp-for="inlssueFileId">
                         <input type="hidden" asp-for="inDepartmentId">
                         <input type="hidden" asp-for="inDivisionId">
@@ -180,70 +189,70 @@
                 </div>
             </div>
         </div>
-         @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
+        @if (Model.inStatus == (int)CommonFunctions.FileStatus.Pending)
         {
             <div class="col-4">
                 <div class="card">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h4>Assigned To</h4>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input id="txtFirstName" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <input id="txtDepartmentA" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input id="txtEmail" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mobile</label>
-                        <input id="txtMobileA" type="text" class="form-control" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">User Type</label>
-                        <input id="txtUserType" type="text" class="form-control" readonly>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>Assigned To</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input id="txtFirstName" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Department</label>
+                            <input id="txtDepartmentA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input id="txtEmail" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input id="txtMobileA" type="text" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">User Type</label>
+                            <input id="txtUserType" type="text" class="form-control" readonly>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
-        </div>
-       
     </div>
+
+</div>
 </div>
 @section Scripts {
 <partial name="_ValidationScriptsPartial.cshtml" />
 <script type="text/javascript">
-        var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
-        var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
-        var msUserList = '@Url.Action("GetUserDropdown")';
+    var msGetUserDetail = '@Url.Action("GetUserDetailFromDropDown")';
+    var msGetFileDetail = '@Url.Action("GetFileDetailFromDropDown")';
+    var msUserList = '@Url.Action("GetUserDropdown")';
 
 
-         $(document).ready(function () {
-            getUserList($('#ddDepartmentId').val());
-            console.log($('#ddDepartmentId').val());
-            GetFileDetail();
-         });
+     $(document).ready(function () {
+        getUserList($('#ddDepartmentId').val());
+        console.log($('#ddDepartmentId').val());
+        GetFileDetail();
+     });
 
-        function getUserList(id) {
-            var loData = new Object();
-            loData.DepartmentId = id;
-            if ($("#ddUser").length > 0) {
-                $("#ddUser").empty();
-                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
-            }
-            loadMyRequest(msUserList, "GET", loData, function (response) {
-                $("#ddUser").empty();
-                $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
-                response.data.forEach(d => $("#ddUser").append("<option value='" + d.id + "'>" + d.value + "</option>"));
-
-            }, function () { });
+    function getUserList(id) {
+        var loData = new Object();
+        loData.DepartmentId = id;
+        if ($("#ddUser").length > 0) {
+            $("#ddUser").empty();
+            $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
         }
+        loadMyRequest(msUserList, "GET", loData, function (response) {
+            $("#ddUser").empty();
+            $("#ddUser").append("<option value='" + "" + "'>" + "Select User" + "</option>");
+            response.data.forEach(d => $("#ddUser").append("<option value='" + d.id + "'>" + d.value + "</option>"));
+
+        }, function () { });
+    }
 </script>
 <script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
 <script src="~/Scripts/IssueFile/FileDetail.js" asp-append-version="true"></script>
@@ -253,8 +262,8 @@
         $(document).ready(function () {
             getIssueFileData1();
          });
-    </script>
-    <script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
+</script>
+<script src="~/Scripts/IssueFile/IssueFileList.js" asp-append-version="true"></script>
 
 }
 

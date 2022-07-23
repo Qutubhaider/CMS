@@ -24,7 +24,7 @@
                         <div class="mb-3">
                             <label class="form-label">Select User Role</label>
                             <select id="ddRole" asp-for="inRole" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Role</option>
+                                <option value="0">Select Role</option>
                                 <option value="1">Super Admin</option>
                                 <option value="2">Division Admin</option>
                                 <option value="4">Department Admin</option>
@@ -36,40 +36,40 @@
                         <div class="mb-3">
                             <label class="form-label">Zone Name</label>
                             <select id="ddZone" onchange="OnZoneChange();" asp-for="inZoneId" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.ZoneList,"id","value"))">
-                                <option value="">Select Zone Name</option>
+                                <option value="0">Select Zone Name</option>
                             </select>
                             <span asp-validation-for="inZoneId" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Division Name</label>
                             <select id="ddDivision" onchange="OnDivisionChangeLoadDesk(); OnDivisionChangeLoadStore();" asp-for="inDivisionId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Division Name</option>
+                                <option value="0">Select Division Name</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Department Name</label>
                             <select id="ddDepartment" onchange="OnSChange();" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Choose ..." asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
-                                <option value="">Select Department Name</option>
+                                <option value="0">Select Department Name</option>
                             </select>
                             <span asp-validation-for="inDepartmentId" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Designation Name</label>
                             <select id="ddDesignation" asp-for="inDesignationId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Department Name</option>
+                                <option value="0">Select Department Name</option>
                             </select>
                             <span asp-validation-for="inDesignationId" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Desk Name</label>
                             <select id="ddDesk" asp-for="inDeskid" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Zone Name</option>
+                                <option value="0">Select Zone Name</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Receptionist Name</label>
                             <select id="ddStore" asp-for="inStoreId" class="select2 form-control select2-multiple" data-placeholder="Choose ...">
-                                <option value="">Select Receptionist Name</option>
+                                <option value="0">Select Receptionist Name</option>
 
                             </select>
                         </div>

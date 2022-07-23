@@ -1,6 +1,6 @@
 ﻿-- ============================================= 
--- Author: Vaibhav Singh
--- EXEC getFileList 
+-- Author: Qutub
+-- EXEC getIssueFileListByStore 
 -- ============================================= 
 /* 
 Ref#	Modified By			Modified date			Description 
@@ -19,9 +19,8 @@ CREATE PROC [dbo].[getIssueFileListByStore]
 AS 
 BEGIN 
 SET NOCOUNT ON;   
-	SET @stFileName =REPLACE(@stFileName,'''','''''') 
 	DECLARE @stSQL AS NVARCHAR(MAX) 
-	DECLARE @stSort AS NVARCHAR(MAX) = 'dtIssueDate' 
+	DECLARE @stSort AS NVARCHAR(MAX) = 'inlssueFileId' 
 	DECLARE @inStart INT, @inEnd INT 
  
 	SET @stSortOrder = ISNULL(@stSortOrder, 'DESC') 
@@ -30,11 +29,12 @@ SET NOCOUNT ON;
  
 	IF @inSortColumn = 1 
 	BEGIN 
-		SET @stSort = 'stFileName'; 
+		SET @stSort = 'inlssueFileId'; 
 	END  
 	SET @stSQL=''+'WITH PAGED AS(  
-		SELECT CAST(ROW_NUMBER() OVER(ORDER BY DESC ' + ISNULL(@stSortOrder,'DESC') + ' ) AS INT) AS inRownumber, 
-		inSRId,inlssueFileId,unlssueFileId,dtIssueDate,stComment,inStatus,stFileName,stDivisionName,stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo
+		SELECT CAST(ROW_NUMBER() OVER(ORDER BY '+ @stSort + ' ' + ISNULL(@stSortOrder,'ASC') + ' ) AS INT) AS inRownumber,		
+		inSRId,inlssueFileId,unlssueFileId,dtIssueDate,stComment,inStatus,stFileName,stDivisionName,
+		stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo,stCategoryName,stSubCategoryName,AGEING
 		FROM ( 
             SELECT  IFH.inSRId,
                     IFH.inlssueFileId, 
@@ -42,27 +42,30 @@ SET NOCOUNT ON;
 					IFH.dtIssueDate,
 					IFH.stComment,
 					IFH.inStatus,
-                    (F.stEmployeeName+'' || ''+F.stEmployeeNumber+'' || ''+F.stPPONumber+'' || ''+F.stPFNumber) AS stFileName,
+                    (F.stEmployeeName) AS stFileName,
 					DV.stDivisionName,					
-					(UP.stFirstName) AS stFirstNameAssignedBy,
+					(UPS.stFirstName) AS stFirstNameAssignedBy,
 					(DP.stDepartmentName) stDepartmentAssignedBy,
 					(UPF.stFirstName) AS stFirstNameAssignTo,
-					(DPS.stDepartmentName) stDepartmentAssignedTo
+					(DPS.stDepartmentName) stDepartmentAssignedTo,
+					CM.stCategoryName,
+					(CMS.stCategoryName) AS stSubCategoryName,
+					DATEDIFF(day,dtIssueDate,getdate() ) AS AGEING,
             FROM tblIssueFileHistory IFH WITH(NOLOCK)
             JOIN tblDivision DV ON DV.inDivisionId=IFH.inDivisionId
-            JOIN tblUserProfile UP ON UP.inUserProfileId=IFH.inCreatedBy
-			JOIN tblUserProfile UPF ON UPF.inUserProfileId=IFH.inAssignUserId
+			LEFT JOIN tblUserProfile UPS ON UPS.inUserId=IFH.inCreatedBy
+			LEFT JOIN tblUserProfile UPF ON UPF.inUserId=IFH.inAssignUserId
             JOIN tblStoreFileDetails F ON F.inStoreFileDetailsId=IFH.inStoreFileDetailsId
-            JOIN tblDepartment DP ON DP.inDepartmentId=UP.inDepartmentId
-            JOIN tblDepartment DPS ON DPS.inDepartmentId=UPF.inDepartmentId
-            WHERE 1=1' 
- 
-	IF(ISNULL(@stFileName,'')<>'') 
-		SET @stSQL = @stSQL + '  AND (F.stFileName LIKE ''%' + CONVERT(NVARCHAR(211), @stFileName)  + '%'')' 
+            LEFT JOIN tblDepartment DP ON DP.inDepartmentId=UPS.inDepartmentId
+            LEFT JOIN tblDepartment DPS ON DPS.inDepartmentId=UPF.inDepartmentId
+		    JOIN tblCategoryMaster CM ON CM.inCategoryId=IFH.inCategoryId
+			JOIN tblCategoryMaster CMS ON CMS.inCategoryId=IFH.inSubCategoryId
+			WHERE 1=1' 
  
  +'' 
  IF(ISNULL(@inUserId,0)>0)               
-		SET @stSQL = @stSQL +' AND IFH.inCreatedBy= '+ CONVERT(NVARCHAR(11), @inUserId) +''
+		SET @stSQL = @stSQL +' AND IFH.inAssignUserId= '+ CONVERT(NVARCHAR(11), @inUserId) +''
+
 	SET @stSQL = @stSQL +' 
 				)A )   
 				SELECT (SELECT CAST(COUNT(*) AS INT) FROM PAGED) AS inRecordCount,*   

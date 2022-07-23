@@ -8,9 +8,8 @@ namespace CMSBAL.Dashboard.Models
 {
     public class DashboardResult
     {
-        public int inStoreUserCount { get; set; }
-        public int inDeskOperatorCount { get; set; }
-        public int inPendingAcceptFileCount { get; set; }
-        public int inPendingCaseCount { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int inTotalOP { get; set; }
     }
 }

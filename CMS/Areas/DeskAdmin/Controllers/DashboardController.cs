@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using static CMSUtility.Utilities.CommonConstant;
 
 namespace DmfWeb.DeskAdmin.Stores.Controllers
@@ -21,17 +23,18 @@ namespace DmfWeb.DeskAdmin.Stores.Controllers
         }
         public IActionResult Index()
         {
-            /* DashboardResult loDashboardResult = new DashboardResult();
-             moUnitOfWork.DashboardRepository.getStoreUserCount(Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value),(int)CommonConstant.UserType.DeskAdmin,out int inStoreUserCount);
-             loDashboardResult.inStoreUserCount= inStoreUserCount;
-             moUnitOfWork.DashboardRepository.getDeskOperatorCount(Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value), (int)CommonConstant.UserType.DeskAdmin, out int inDeskOpCount);
-             loDashboardResult.inDeskOperatorCount = inDeskOpCount;
-             moUnitOfWork.DashboardRepository.getPendingAcceptFileCount(Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value), (int)CommonConstant.UserType.DeskAdmin, out int inPendingAcceptFileCount);
-             loDashboardResult.inPendingAcceptFileCount = inPendingAcceptFileCount;
-             moUnitOfWork.DashboardRepository.getPendingCaseCount(Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value), (int)CommonConstant.UserType.DeskAdmin, out int inCaseCount);
-             loDashboardResult.inPendingCaseCount = inCaseCount;*/
-            return View("~/Areas/DeskAdmin/Views/Dashboard/Dashboard.cshtml");
-            //return View("~/Areas/DeskAdmin/Views/Dashboard/Dashboard.cshtml",loDashboardResult);
+            try
+            {
+                List<DashboardResult> loDashboardResult = new List<DashboardResult>();
+                loDashboardResult = moUnitOfWork.DashboardRepository.GetDepartmentDashboard(Convert.ToInt32(User.FindFirst(SessionConstant.DesignationId).Value.ToString()));
+                dynamic loModel = new ExpandoObject();
+                loModel.GetDashboardResult = loDashboardResult;
+                return PartialView("~/Areas/DeskAdmin/Views/Dashboard/Dashboard.cshtml", loModel);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Error");
+            }
         }
     }
 }

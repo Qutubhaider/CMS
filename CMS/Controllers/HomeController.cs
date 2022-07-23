@@ -63,7 +63,7 @@ namespace FileSystemWeb.Controllers
         public IActionResult MyProfile()
         {
             MyProfile loUserProfile = new MyProfile();
-            loUserProfile = moUnitOfWork.UserRepository.GetUserProfile(Guid.Parse(User.FindFirst(SessionConstant.unUserId).Value.ToString()));
+            loUserProfile = moUnitOfWork.UserRepository.GetUserProfile(Convert.ToInt32(User.FindFirst(SessionConstant.Id).Value.ToString()));
             loUserProfile.ZoneList = moUnitOfWork.ZoneRepository.GetZoneDropDown();
             loUserProfile.DepartmentList = moUnitOfWork.DepartmentRepository.GetDepartmentDropDown();
             return View("~/Views/Home/MyProfile.cshtml", loUserProfile);

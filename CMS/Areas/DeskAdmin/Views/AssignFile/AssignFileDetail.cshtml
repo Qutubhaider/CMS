@@ -4,7 +4,7 @@
     Layout = "_LayoutDeskAdmin";
     ViewBag.Title = "Complain Detail";
     var loTableHeaders = new[]
-                                                  {
+                                                          {
        new {Id="1", Visible=true, Title="#",   Sort = false,   dbColName = "",   CssClass = ""},
         new {Id="1", Visible=true, Title="Sr.No",   Sort = false,   dbColName = "inSRId",   CssClass = ""},
           new {Id="1", Visible=true, Title="Category",   Sort = false,   dbColName = "stCategory",   CssClass = ""},
@@ -15,10 +15,12 @@
         new {Id="2", Visible=true, Title="Department",   Sort = false,   dbColName = "stDepartment",   CssClass = ""},
         new {Id="3", Visible=true, Title="Complain",   Sort = false,   dbColName = "stFileName",   CssClass = ""},
         new {Id="2", Visible=true, Title="Issue Date",   Sort = false,   dbColName = "dtIssueDate",   CssClass = ""},
+        new {Id="2", Visible=true, Title="Total Days",   Sort = false,   dbColName = "Total Days",   CssClass = ""},
+         new {Id="2", Visible=true, Title="Ageing",   Sort = false,   dbColName = "Total Age",   CssClass = ""},
          new {Id="2", Visible=true, Title="Status",   Sort = false,   dbColName = "inStatus",   CssClass = ""}
     };
 }
-<form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="Stores" class="custom-validation" novalidate="">
+<form asp-action="SaveIssueFile" asp-controller="IssueFile" asp-area="DeskAdmin" class="custom-validation" novalidate="">
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row">
@@ -28,7 +30,7 @@
                 </div>
             </div>
             <div class="col-4" style="float:right;">
-                <a class="btn btn-danger" style="float: right;" asp-area="Stores" asp-controller="IssueFile" asp-action="Index">Back</a>
+                <a class="btn btn-danger" style="float: right;" asp-area="DeskAdmin" asp-controller="IssueFile" asp-action="Index">Back</a>
             </div>
         </div>
         <div class="row">
@@ -59,11 +61,6 @@
                                                             }
                                                             else
                                                                 @loHeader.Title
-
-
-
-
-
 
                                                             </th>
                                                     }

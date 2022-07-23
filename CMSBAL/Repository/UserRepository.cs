@@ -84,9 +84,9 @@ namespace CMSBAL.Repository
             fiSuccess = Convert.ToInt32(loSuccess.Value);
         }
 
-        public MyProfile GetUserProfile(Guid unUserId)
+        public MyProfile GetUserProfile(int inUserId)
         {
-            return moDatabaseContext.Set<MyProfile>().FromSqlInterpolated($"EXEC getUserProfileDetail @unUserId={unUserId}").AsEnumerable().FirstOrDefault();
+            return moDatabaseContext.Set<MyProfile>().FromSqlInterpolated($"EXEC getUserProfileDetail @inUserId={inUserId}").AsEnumerable().FirstOrDefault();
         }
 
         public void SaveUserProfile(MyProfile foUser, out int fiSuccess, out int fiRole)

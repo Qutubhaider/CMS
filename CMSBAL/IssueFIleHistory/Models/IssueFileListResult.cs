@@ -21,6 +21,7 @@ namespace CMSBAL.IssueFIleHistory.Models
         public string stFirstNameAssignTo { get; set; }
         public string stDepartmentAssignedBy { get; set; }
         public string stDepartmentAssignedTo { get; set; }
+        public int? AgeIng { get; set; }
         public int inSRId { get; set; }
         public string stCategoryName { get; set; }
         public string stSubCategoryName { get; set; }

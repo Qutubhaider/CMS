@@ -10,6 +10,7 @@ using CMSUtility.Utilities;
 using System.Text;
 using System.Dynamic;
 using CMSUtility.Service.PaginationService;
+using CMSUtility.Models;
 
 namespace FileSystemWeb.Areas.Admin.Controllers
 {
@@ -86,7 +87,7 @@ namespace FileSystemWeb.Areas.Admin.Controllers
                 loCategory = moUnitOfWork.CategoryRepository.GetCategory(id);
             }
             loCategory.DepartmentList = moUnitOfWork.DepartmentRepository.GetDepartmentDropDown();
-            loCategory.CategoryList = moUnitOfWork.CategoryRepository.GetCategoryDropDown();
+            //loCategory.CategoryList = moUnitOfWork.CategoryRepository.GetCategoryDropDown();
             return View("~/Areas/Admin/Views/Category/Detail.cshtml", loCategory);
         }
 
@@ -118,6 +119,13 @@ namespace FileSystemWeb.Areas.Admin.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult GetParentCategoryDropdown(int fiDepartmentId)
+        {
+            List<Select2> ParentCategoryDropDown = moUnitOfWork.CategoryRepository.GetCategory(fiDepartmentId);
+            return Json(new { data = ParentCategoryDropDown });
         }
     }
 }

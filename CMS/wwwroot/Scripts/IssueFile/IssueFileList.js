@@ -20,7 +20,7 @@ function sort(fsSortColumn, element) {
 function getIssueFileData(fsPageNo, fsSortColumn = lsSortCol, fsSortDirection = lsSortOrder) {
     showLoading();
     var lsFileName = $('#txtFileName').val();
-    var liStatus = '';
+    var liStatus = $('#ddStatus').val();
     var liSize = $('#ddPageSize').val();
 
     var loData = new Object();

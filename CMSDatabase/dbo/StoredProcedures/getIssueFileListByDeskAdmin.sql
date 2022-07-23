@@ -14,7 +14,8 @@ CREATE PROC [dbo].[getIssueFileListByDeskAdmin]
 	@inPageSize INT = 10 ,
 	@inUserId INT = NULL,
 	@inDepartmentId INT = NULL,
-	@inDivisionId INT = NULL
+	@inDivisionId INT = NULL,
+	@inStatus INT = NULL
 ) 
 AS 
 BEGIN 
@@ -34,7 +35,7 @@ SET NOCOUNT ON;
 	SET @stSQL=''+'WITH PAGED AS(  
 		SELECT CAST(ROW_NUMBER() OVER(ORDER BY '+ @stSort + ' ' + ISNULL(@stSortOrder,'ASC') + ' ) AS INT) AS inRownumber,		
 		inSRId,inlssueFileId,unlssueFileId,dtIssueDate,stComment,inStatus,stFileName,stDivisionName,
-		stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo,stCategoryName,stSubCategoryName
+		stFirstNameAssignedBy,stDepartmentAssignedBy,stFirstNameAssignTo,stDepartmentAssignedTo,stCategoryName,stSubCategoryName,AGEING
 		FROM ( 
             SELECT  IFH.inSRId,
                     IFH.inlssueFileId, 
@@ -49,11 +50,12 @@ SET NOCOUNT ON;
 					(UPF.stFirstName) AS stFirstNameAssignTo,
 					(DPS.stDepartmentName) stDepartmentAssignedTo,
 					CM.stCategoryName,
-					(CMS.stCategoryName) AS stSubCategoryName
+					(CMS.stCategoryName) AS stSubCategoryName,
+					DATEDIFF(day,dtIssueDate,getdate() ) AS AGEING
             FROM tblIssueFileHistory IFH WITH(NOLOCK)
             JOIN tblDivision DV ON DV.inDivisionId=IFH.inDivisionId
-			LEFT JOIN tblUserProfile UPS ON UPS.inUserId=IFH.inAssignUserId
-			LEFT JOIN tblUserDetails UPF ON UPF.inUserId=IFH.inCreatedBy
+			LEFT JOIN tblUserProfile UPS ON UPS.inUserId=IFH.inCreatedBy
+			LEFT JOIN tblUserProfile UPF ON UPF.inUserId=IFH.inAssignUserId
             JOIN tblStoreFileDetails F ON F.inStoreFileDetailsId=IFH.inStoreFileDetailsId
             LEFT JOIN tblDepartment DP ON DP.inDepartmentId=UPS.inDepartmentId
             LEFT JOIN tblDepartment DPS ON DPS.inDepartmentId=UPF.inDepartmentId
@@ -64,6 +66,12 @@ SET NOCOUNT ON;
  +'' 
  IF(ISNULL(@inUserId,0)>0)               
 		SET @stSQL = @stSQL +' AND IFH.inAssignUserId= '+ CONVERT(NVARCHAR(11), @inUserId) +''
+
+ IF(ISNULL(@inDepartmentId,0)>0)               
+		SET @stSQL = @stSQL +' AND IFH.inDepartmentId= '+ CONVERT(NVARCHAR(11), @inDepartmentId) +''
+
+ IF(ISNULL(@inStatus,0)>0)               
+		SET @stSQL = @stSQL +' AND IFH.inStatus= '+ CONVERT(NVARCHAR(11), @inStatus) +''
 
 	SET @stSQL = @stSQL +' 
 				)A )   
@@ -76,4 +84,3 @@ SET NOCOUNT ON;
 	PRINT(@stSQL) 
 	EXEC (@stSQL) 
 END 
-

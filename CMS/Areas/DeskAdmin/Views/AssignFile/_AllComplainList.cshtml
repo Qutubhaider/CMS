@@ -32,7 +32,6 @@
                     DateTime dtIssueDate = Convert.ToDateTime(loIssueFileList.dtIssueDate);
                 }
                 <td> @dtIssueDate.Date.ToString("dd MMM', 'yyyy")</td>
-               
                 <td>
                     @if (loIssueFileList.inStatus == (int)CommonFunctions.FileStatus.Accepted)
                     {

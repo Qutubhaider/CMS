@@ -21,7 +21,7 @@ namespace CMSBAL.Repository.IRepository
         List<Select2> GetUserListByDepartmentId(int fiDepartmentId,int fiUserId);
         UserDropDownDetailResult GetUserDetailFromDropDown(int fiUserId);
         void SaveUser(UserRegisterVM fouser,out int success);
-        MyProfile GetUserProfile(Guid unUserId);
+        MyProfile GetUserProfile(int inUserId);
         void SaveUserProfile(MyProfile foUser, out int fiSuccess, out int fiRole);
         void UpdateNewPassword(int inUserId, string newPassword, out int fiSuccess);
     }

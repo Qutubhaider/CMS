@@ -1,2 +1,88 @@
-﻿@model CMSBAL.Complain.Models.Complain@{    Layout = "_LayoutUsers";
-    ViewBag.Title = "Add Complain";}<div class="container-fluid">    <!-- start page title -->    <div class="row">        <div class="col-8">            <div class="page-title-box d-sm-flex align-items-center justify-content-between">                <h4 class="mb-sm-0">Complain Detail</h4>            </div>        </div>        <div class="col-4" style="float:right;">            <a class="btn btn-danger" style="float: right;" asp-area="User" asp-controller="Complain" asp-action="Index">Back</a>        </div>    </div>    <div class="row">        <form asp-action="SaveComplain" asp-controller="Complain" asp-area="Users" enctype="multipart/form-data" class="custom-validation" method="post" novalidate="">            <div class="col-xl-6">                <div class="card">                    <div class="card-body">                        <div class="mb-3">                            <label class="form-label">Departments</label>                            <select id="ddDepartment" onchange=OnDepartmentChangeLoadCategory(); asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Department" asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">                                <option value="">Select Department</option>                            </select>                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>                        </div>                        <div class="mb-3">                            <label class="form-label">Select Parent Category</label>                            <select id="ddParentCategory" onchange="OnParentCategoryChangeLoadSubCategory();" asp-for="inCategoryId" class="select2 form-control select2-multiple" data-placeholder="Select Parent Category">                            </select>                            <span asp-validation-for="inCategoryId" class="text-danger"></span>                        </div>                        <div class="mb-3">                            <label class="form-label">Select Sub Category</label>                            <select id="ddSubCategory" asp-for="inSubCategoryId" class="select2 form-control select2-multiple" data-placeholder="Select Sub Category">                            </select>                            <span asp-validation-for="inSubCategoryId" class="text-danger"></span>                        </div>                        <div class="mb-3">                            <label class="form-label">Upload File</label>                            <input type="file" asp-for="File" class="filestyle" data-buttonname="btn-secondary" />                        </div>                    </div>                </div>            </div>            <div class="col-xl-6">                <div class="card">                    <div class="card-body">                        <div class="mb-3">                            <label class="form-label">Complain</label>                            <textarea rows="15" cols="15" id="txtComplain" asp-for="stComplainText" data-placeholder="Complain" class="form-control"></textarea>                        </div>                        <div>                            <div>                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">                                    Submit                                </button>                                <a class="btn btn-secondary waves-effect" asp-area="Users" asp-controller="Complain" asp-action="Index">                                    Cancel                                </a>                            </div>                        </div>                    </div>                </div>            </div>        </form>    </div></div>@section Scripts {<partial name="_ValidationScriptsPartial.cshtml" /><script type="text/javascript">    var msGetCategoryDropDown = '@Url.Action("GetParentCategoryDropdown")';    var msGetSubCategoryDropDown = '@Url.Action("GetSubCategoryDropdown")';</script><script src="~/Scripts/Common/Common.js" asp-append-version="true"></script><script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>}
+﻿@model CMSBAL.Complain.Models.Complain
+@{
+    Layout = "_LayoutUsers";
+    ViewBag.Title = "Add Complain";
+}
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-8">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Complain Detail</h4>
+            </div>
+        </div>
+        <div class="col-4" style="float:right;">
+            <a class="btn btn-danger" style="float: right;" asp-area="User" asp-controller="Complain" asp-action="Index">Back</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <form asp-action="SaveComplain" asp-controller="Complain" asp-area="Users" enctype="multipart/form-data" class="custom-validation" method="post" novalidate="">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label class="form-label">Departments</label>
+                            <select id="ddDepartment" onchange="OnDepartmentChangeLoadCategory();" asp-for="inDepartmentId" class="select2 form-control select2-multiple" data-placeholder="Department" asp-items="@(new SelectList(Model.DepartmentList,"id","value"))">
+                                <option value="">Select Department</option>
+                            </select>
+                            <span asp-validation-for="inDepartmentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Parent Category</label>
+                            <select id="ddParentCategory" onchange="OnParentCategoryChangeLoadSubCategory();" asp-for="inCategoryId" class="select2 form-control select2-multiple" data-placeholder="Select Parent Category">
+                            </select>
+                            <span asp-validation-for="inCategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Select Sub Category</label>
+                            <select id="ddSubCategory" asp-for="inSubCategoryId" class="select2 form-control select2-multiple" data-placeholder="Select Sub Category">
+                            </select>
+                            <span asp-validation-for="inSubCategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload File</label>
+                            <input type="file" asp-for="File" class="filestyle" data-buttonname="btn-secondary" />
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Complain</label>
+                            <textarea rows="15" cols="15" id="txtComplain" asp-for="stComplainText" data-placeholder="Complain" class="form-control"></textarea>
+                        </div>
+                        <div>
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light me-1">
+                                    Submit
+                                </button>
+                                <a class="btn btn-secondary waves-effect" asp-area="Users" asp-controller="Complain" asp-action="Index">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+<partial name="_ValidationScriptsPartial.cshtml" />
+<script type="text/javascript">
+    var msGetCategoryDropDown = '@Url.Action("GetParentCategoryDropdown")';
+    var msGetSubCategoryDropDown = '@Url.Action("GetSubCategoryDropdown")';
+</script>
+<script src="~/Scripts/Common/Common.js" asp-append-version="true"></script>
+<script src="~/Scripts/Common/Dropdown.js" asp-append-version="true"></script>
+}
+

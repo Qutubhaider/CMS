@@ -1,4 +1,5 @@
-﻿@*@model CMSBAL.Dashboard.Models.DashboardResult*@
+﻿@model dynamic;
+@using CMSBAL.Dashboard.Models;
 @{
     Layout = "_LayoutDeskAdmin";
     ViewBag.Title = "Dashboard";
@@ -6,95 +7,89 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Dashboard</h4>
-
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-            </div>
-
+           
+            
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xl-3 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex text-muted">
-                    <div class="flex-grow-1 overflow-hidden">
-                        <p class="mb-1 font-weight-bold">Total Users</p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">Store User </span>22 @*@Model.inStoreUserCount*@
-                        </p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">Desk Operator </span>22 @*@Model.inDeskOperatorCount*@
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!-- end card-body -->
-        </div>
-        <!-- end card -->
-    </div>
+    <div class="col-md-12">
+        <h4 class="mb-sm-0">Department Dashboard</h4>
+        <br />
+        @foreach (DashboardResult loCategoryListResult in Model.GetDashboardResult)
+        {
 
-    <div class="col-xl-3 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex text-muted">
-                    <div class="flex-grow-1 overflow-hidden">
-                        <p class="mb-1 font-weight-bold">Pending Files</p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">Store Pending </span> 133
-                        </p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">User Pending </span> 231
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            if (loCategoryListResult.Id <= 4)
+            {
 
-    <div class="col-xl-3 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex text-muted">
-                    <div class="flex-grow-1 overflow-hidden">
-                        <p class="mb-1 font-weight-bold">Pending Case</p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">User Case Pending </span> 231
-                        </p>
-                    </div>
+                <div class="counter-number">
+                    <div class="coming-box">@loCategoryListResult.inTotalOP <span>@loCategoryListResult.Name</span></div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-xl-3 col-sm-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex text-muted">
-                    <div class="flex-grow-1 overflow-hidden">
-                        <p class="mb-1 font-weight-bold">OWN Pending</p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">Pending Accept File</span> 22 @* @Model.inPendingAcceptFileCount*@
-                        </p>
-                        <p class="text-truncate mb-0">
-                            <span class="text-success me-2">Pending Case</span>22 @*@Model.inPendingCaseCount*@
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
-
 </div>
-<!-- end page title -->
 
+
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="mb-sm-0">Operator Dashboard</h4>
+        <br />
+        @foreach (DashboardResult loCategoryListResult in Model.GetDashboardResult)
+        {
+            if (loCategoryListResult.Id >= 5 && loCategoryListResult.Id <= 8)
+            {
+
+                <div class="counter-number">
+                    <div class="coming-box">@loCategoryListResult.inTotalOP <span>@loCategoryListResult.Name</span></div>
+                </div>
+
+            }
+
+        }
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12"> <h4 class="mb-sm-0">Reception Dashboard</h4>
+        <br />
+        @foreach (DashboardResult loCategoryListResult in Model.GetDashboardResult)
+        {
+            if (loCategoryListResult.Id >= 9 && loCategoryListResult.Id <= 11)
+            {
+
+                <div class="counter-number">
+                    <div class="coming-box">@loCategoryListResult.inTotalOP <span>@loCategoryListResult.Name</span></div>
+                </div>
+
+            }
+
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12"> <h4 class="mb-sm-0">Total Users and Comlains</h4>
+        <br />
+        @foreach (DashboardResult loCategoryListResult in Model.GetDashboardResult)
+        {
+            if (loCategoryListResult.Id >= 12 && loCategoryListResult.Id <= 15)
+            {
+
+                <div class="counter-number">
+                    <div class="coming-box">@loCategoryListResult.inTotalOP <span>@loCategoryListResult.Name</span></div>
+                </div>
+
+            }
+
+        }
+    </div>
+</div>
 @section Scripts {
-    <!-- apexcharts js -->
-    <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
-    <script src="~/assets/js/pages/dashboard.init.js"></script>
+<!-- apexcharts js -->
+<script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
+<script src="~/assets/js/pages/dashboard.init.js"></script>
 }
